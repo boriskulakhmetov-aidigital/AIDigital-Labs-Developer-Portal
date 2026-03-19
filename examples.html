@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Usage Examples — AI Digital Labs</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a; color: #d0d0d0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7; padding: 60px 24px;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #0009DC; font-size: 2rem; margin-bottom: 8px; }
+    .subtitle { color: #666; font-size: 1rem; margin-bottom: 40px; }
+    h2 { color: #e0e0e0; font-size: 1.3rem; margin: 40px 0 16px; }
+    .back { display: inline-block; margin-bottom: 32px; color: #666; text-decoration: none; font-size: 0.9rem; }
+    .back:hover { color: #999; }
+    a { color: #7b8cff; }
+
+    /* Chat simulation */
+    .chat { margin: 16px 0 32px; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; }
+    .chat-header {
+      background: #111; padding: 12px 16px; font-size: 0.8rem; color: #666;
+      border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 8px;
+    }
+    .chat-header .dot { width: 8px; height: 8px; border-radius: 50%; background: #0009DC; }
+    .chat-body { padding: 20px; }
+    .msg { margin-bottom: 16px; max-width: 85%; }
+    .msg:last-child { margin-bottom: 0; }
+    .msg.user { margin-left: auto; }
+    .msg.assistant { margin-right: auto; }
+    .msg-label { font-size: 0.7rem; color: #555; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .msg.user .msg-label { text-align: right; }
+    .msg-bubble {
+      padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5;
+    }
+    .msg.user .msg-bubble { background: #0009DC22; color: #c0c8ff; border-bottom-right-radius: 4px; }
+    .msg.assistant .msg-bubble { background: #151515; color: #ccc; border-bottom-left-radius: 4px; }
+    .tool-call {
+      background: #0a1a0a; border: 1px solid #1a3a1a; border-radius: 8px;
+      padding: 10px 14px; margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    }
+    .tool-call .tool-name { color: #4ade80; font-weight: 600; }
+    .tool-call .tool-param { color: #888; }
+    .tool-call .tool-value { color: #7b8cff; }
+    .tool-result {
+      background: #0a0a1a; border: 1px solid #1a1a3a; border-radius: 8px;
+      padding: 10px 14px; margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #999;
+    }
+    .report-link {
+      display: inline-block; background: #0009DC; color: #fff; padding: 8px 16px;
+      border-radius: 8px; text-decoration: none; font-size: 0.85rem; margin-top: 8px;
+    }
+    .report-link:hover { background: #0007b3; }
+    .badge {
+      display: inline-block; background: #0009DC22; color: #7b8cff;
+      padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;
+    }
+    .example-context {
+      background: #111; border: 1px solid #1a1a1a; border-radius: 8px;
+      padding: 14px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #888;
+    }
+    .example-context strong { color: #bbb; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Developer Portal</a>
+    <h1>MCP Usage Examples</h1>
+    <p class="subtitle">Real conversations showing how AI Digital Labs tools work inside Claude.</p>
+
+    <!-- Example 1: Website Audit -->
+    <h2>Example 1: Website Audit with Competitive Analysis</h2>
+    <div class="example-context">
+      <strong>Scenario:</strong> A marketing manager wants to audit their company's website and compare it against a competitor before a redesign.
+    </div>
+    <div class="chat">
+      <div class="chat-header"><span class="dot"></span> Claude &mdash; with AI Digital Labs connected</div>
+      <div class="chat-body">
+        <div class="msg user">
+          <div class="msg-label">You</div>
+          <div class="msg-bubble">Run a website audit on https://acme-saas.com — we're a B2B SaaS company focused on lead generation. Pay special attention to mobile conversion and compare our approach against hubspot.com's landing pages.</div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            I'll run a comprehensive website audit for you. Let me submit this now.
+            <div class="tool-call">
+              <span class="tool-name">website_audit</span><br>
+              <span class="tool-param">website_url:</span> <span class="tool-value">"https://acme-saas.com"</span><br>
+              <span class="tool-param">brand_name:</span> <span class="tool-value">"Acme SaaS"</span><br>
+              <span class="tool-param">business_model:</span> <span class="tool-value">"B2B"</span><br>
+              <span class="tool-param">conversion_goal:</span> <span class="tool-value">"Lead Generation"</span><br>
+              <span class="tool-param">instructions:</span> <span class="tool-value">"Focus on mobile conversion UX. Compare landing page strategy against hubspot.com."</span>
+            </div>
+            <div class="tool-result">
+              ✓ Job submitted — job_id: "a7f2b..."<br>
+              Estimated processing time: 4-8 minutes
+            </div>
+            Your audit is processing. I'll check on it in about 30 seconds. This typically takes 4-8 minutes as it analyzes your site's SEO, accessibility, conversion paths, and mobile experience.
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-bubble" style="color:#888; font-style:italic;">
+            <em>...Claude automatically polls check_status every 30 seconds...</em>
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            Your audit is complete! Here are the key findings:<br><br>
+            <strong>Overall Score: 67/100</strong><br><br>
+            <strong>Critical Issues:</strong><br>
+            • Mobile CTA buttons are below the fold on 3/5 key landing pages<br>
+            • Form fields lack autofill attributes — 23% higher abandonment on mobile<br>
+            • Page load time 4.2s on 3G (target: &lt;3s)<br><br>
+            <strong>vs. HubSpot:</strong><br>
+            • HubSpot uses single-field progressive forms; yours asks for 7 fields upfront<br>
+            • Their mobile CTAs are sticky; yours scroll away<br>
+            • They use social proof above the fold (customer logos); your social proof is buried in the footer<br><br>
+            <strong>Quick Wins (highest impact, lowest effort):</strong><br>
+            1. Make primary CTA sticky on mobile (+12-18% est. conversion lift)<br>
+            2. Reduce form to email-only with progressive profiling (+8-15%)<br>
+            3. Move customer logos above the fold (+5-8% trust signal)<br><br>
+            <a href="#" class="report-link">View Full Interactive Report &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 2: Multi-tool workflow -->
+    <h2>Example 2: Full Campaign Pre-Launch Check (3 Tools)</h2>
+    <div class="example-context">
+      <strong>Scenario:</strong> A brand manager is about to launch a new campaign and wants to validate the landing page, creative assets, and AI search visibility before going live.
+    </div>
+    <div class="chat">
+      <div class="chat-header"><span class="dot"></span> Claude &mdash; with AI Digital Labs connected</div>
+      <div class="chat-body">
+        <div class="msg user">
+          <div class="msg-label">You</div>
+          <div class="msg-bubble">We're launching a new campaign for our energy drink "VoltSurge" next week. I need three things:<br><br>1. Audit the landing page at https://voltsurge.com/launch<br>2. Run a neuromarketing analysis on our hero banner at https://cdn.voltsurge.com/launch-hero.jpg<br>3. Check how visible VoltSurge is on AI search engines right now</div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            I'll run all three analyses in parallel. Let me kick them off.
+            <div class="tool-call">
+              <span class="tool-name">website_audit</span><br>
+              <span class="tool-param">website_url:</span> <span class="tool-value">"https://voltsurge.com/launch"</span><br>
+              <span class="tool-param">brand_name:</span> <span class="tool-value">"VoltSurge"</span><br>
+              <span class="tool-param">conversion_goal:</span> <span class="tool-value">"E-commerce"</span>
+            </div>
+            <div class="tool-call">
+              <span class="tool-name">neuromarketing_audit</span><br>
+              <span class="tool-param">asset_url:</span> <span class="tool-value">"https://cdn.voltsurge.com/launch-hero.jpg"</span><br>
+              <span class="tool-param">brand_name:</span> <span class="tool-value">"VoltSurge"</span><br>
+              <span class="tool-param">asset_type:</span> <span class="tool-value">"static_banner"</span><br>
+              <span class="tool-param">offer:</span> <span class="tool-value">"New energy drink launch — pre-order now"</span>
+            </div>
+            <div class="tool-call">
+              <span class="tool-name">aio_scan</span><br>
+              <span class="tool-param">concept_name:</span> <span class="tool-value">"VoltSurge"</span><br>
+              <span class="tool-param">concept_type:</span> <span class="tool-value">"product"</span><br>
+              <span class="tool-param">concept_category:</span> <span class="tool-value">"Energy Drinks"</span><br>
+              <span class="tool-param">concept_context:</span> <span class="tool-value">"US market, competing with Monster, Red Bull, Celsius"</span>
+            </div>
+            <div class="tool-result">
+              ✓ 3 jobs submitted — tracking all three<br>
+              Website audit: ~5 min | Neuromarketing: ~8 min | AIO scan: ~10 min
+            </div>
+            All three analyses are running. I'll monitor them and report back as each completes. The website audit will likely finish first.
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-bubble" style="color:#888; font-style:italic;">
+            <em>...results arrive over 10 minutes as each tool completes...</em>
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            All three analyses are complete. Here's your pre-launch briefing:<br><br>
+            <strong>🌐 Website Audit — 74/100</strong><br>
+            Landing page is strong on desktop but has a critical mobile issue: the hero video autoplays and pushes the CTA below the fold. Fix before launch.<br><br>
+            <strong>🧠 Neuromarketing — 7.8/10</strong><br>
+            Strong color contrast and visual hierarchy. The eye-tracking model predicts 89% of viewers will see the product within 2 seconds. However, the CTA text "Pre-Order" blends with the background — increase contrast by 40%.<br><br>
+            <strong>🔍 AI Search Visibility — 23% mention rate</strong><br>
+            VoltSurge appears in only 23% of AI-generated responses about energy drinks. Competitors: Red Bull 94%, Monster 87%, Celsius 61%. Key gap: AI models don't associate VoltSurge with your key differentiators yet.<br><br>
+            <strong>My recommendation:</strong> Fix the mobile CTA and banner contrast before launch (1-day effort). For AI visibility, create authoritative comparison content targeting the queries where competitors dominate.<br><br>
+            <a href="#" class="report-link">Website Report</a>&nbsp;
+            <a href="#" class="report-link">Neuro Report</a>&nbsp;
+            <a href="#" class="report-link">AIO Report</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 3: Focus Group + Prompt Engineering -->
+    <h2>Example 3: Synthetic Focus Group for Ad Creative Testing</h2>
+    <div class="example-context">
+      <strong>Scenario:</strong> A creative director wants to test two ad concepts with different audience segments before committing to production spend.
+    </div>
+    <div class="chat">
+      <div class="chat-header"><span class="dot"></span> Claude &mdash; with AI Digital Labs connected</div>
+      <div class="chat-body">
+        <div class="msg user">
+          <div class="msg-label">You</div>
+          <div class="msg-bubble">I have two ad concepts for our new running shoe "AirStride Pro." Concept A emphasizes performance (speed, records) and Concept B emphasizes lifestyle (freedom, exploration). Can you run a focus group simulation to see which resonates better with millennial runners?</div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            I'll simulate a focus group with synthetic participants that match your target demographic. This will test both concepts against multiple personas.
+            <div class="tool-call">
+              <span class="tool-name">synthetic_focus_group</span><br>
+              <span class="tool-param">brand_name:</span> <span class="tool-value">"AirStride Pro"</span><br>
+              <span class="tool-param">product_description:</span> <span class="tool-value">"Premium running shoe with carbon-plate technology. Two ad concepts: A) Performance-focused (speed records, race wins) B) Lifestyle-focused (freedom, trail exploration, running as meditation)"</span><br>
+              <span class="tool-param">product_category:</span> <span class="tool-value">"Athletic Footwear"</span><br>
+              <span class="tool-param">campaign_objective:</span> <span class="tool-value">"awareness"</span><br>
+              <span class="tool-param">instructions:</span> <span class="tool-value">"Test both Concept A (performance) and Concept B (lifestyle) with millennial runners (ages 28-40). Include both competitive and casual runner personas. Evaluate emotional response, purchase intent, and brand recall for each concept."</span>
+            </div>
+            <div class="tool-result">
+              ✓ Focus group submitted — 8 synthetic participants<br>
+              Estimated: 8-12 minutes
+            </div>
+            The focus group is running with 8 synthetic participants representing different millennial runner archetypes. I'll have the results soon.
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-bubble" style="color:#888; font-style:italic;">
+            <em>...Claude polls and retrieves the completed report...</em>
+          </div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            The focus group results are in. This is interesting — it's not a simple winner:<br><br>
+            <strong>Concept A (Performance): 6.2/10 overall</strong><br>
+            • Strong with competitive runners (8.1/10) — "This speaks my language"<br>
+            • Weak with casual runners (4.3/10) — "Feels intimidating, like it's not for me"<br>
+            • High purchase intent among serious runners, but narrow audience<br><br>
+            <strong>Concept B (Lifestyle): 7.4/10 overall</strong><br>
+            • Strong across all segments — floor of 6.5, ceiling of 8.2<br>
+            • Casual runners loved it (8.2/10) — "Makes me want to just go run"<br>
+            • Competitive runners still responded well (6.8/10) — "Nice vibe but I want to see the tech"<br><br>
+            <strong>Key Insight:</strong> 6 of 8 participants suggested a hybrid — lead with lifestyle imagery but include one performance proof point (e.g., "worn by 3 Boston Marathon qualifiers"). This tested as the strongest positioning in follow-up reactions.<br><br>
+            <strong>Recommendation:</strong> Go with Concept B as the primary creative, but add a performance-credibility element. This gives you the broadest appeal without alienating serious runners.<br><br>
+            <a href="#" class="report-link">View Full Focus Group Report &rarr;</a>
+          </div>
+        </div>
+        <div class="msg user">
+          <div class="msg-label">You</div>
+          <div class="msg-bubble">Great insight. Can you help me write a prompt I can use to generate hybrid ad copy variations using this positioning?</div>
+        </div>
+        <div class="msg assistant">
+          <div class="msg-label">Claude</div>
+          <div class="msg-bubble">
+            Let me engineer an optimized prompt for you — I'll test it for consistency and refine it.
+            <div class="tool-call">
+              <span class="tool-name">prompt_engineering</span><br>
+              <span class="tool-param">prompt_idea:</span> <span class="tool-value">"Generate ad copy for AirStride Pro running shoe that leads with lifestyle/freedom imagery but includes one performance credibility proof point. Target: millennial runners (28-40). Tone: aspirational but authentic, not corporate. Format: headline + subhead + body (50 words max)."</span><br>
+              <span class="tool-param">model_target:</span> <span class="tool-value">"claude"</span><br>
+              <span class="tool-param">use_case:</span> <span class="tool-value">"creative_writing"</span>
+            </div>
+            <div class="tool-result">
+              ✓ Prompt analysis complete — 3 consistency tests passed<br>
+              Hallucination risk: low | Drift score: 0.12
+            </div>
+            Here's your engineered prompt — tested 3 times for consistency with a 0.12 drift score (very stable):<br><br>
+            <div style="background:#0a0a1a; border:1px solid #1a1a3a; border-radius:8px; padding:12px; margin:8px 0; font-size:0.85rem; font-family:monospace; color:#aaa;">
+            You are a senior copywriter at a running brand. Write ad copy for "AirStride Pro," a carbon-plate running shoe.<br><br>
+            POSITIONING: Lead with lifestyle (freedom, trail exploration, running as personal escape). Include exactly ONE performance proof point (e.g., marathon qualifier stat, race placement).<br><br>
+            AUDIENCE: Millennial runners (28-40) who run 3-5x/week. Mix of casual and competitive.<br><br>
+            TONE: Aspirational but human. No corporate jargon. Think Tracksmith, not Nike.<br><br>
+            FORMAT: Headline (≤8 words) | Subhead (≤15 words) | Body (≤50 words)<br><br>
+            Generate 3 variations.
+            </div>
+            <a href="#" class="report-link">View Full Prompt Report &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px; padding-top:24px; border-top:1px solid #1a1a1a; text-align:center;">
+      <p style="color:#555; font-size:0.85rem;">These examples demonstrate real tool behavior. Actual results depend on the content analyzed.</p>
+      <p style="margin-top:16px;">
+        <a href="/">Back to Developer Portal</a> &nbsp;|&nbsp;
+        <a href="/privacy.html">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
