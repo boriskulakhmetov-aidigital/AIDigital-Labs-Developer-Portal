@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Digital Labs — Developer Documentation</title>
+  <meta name="description" content="Developer documentation for AI Digital Labs API and MCP integration. Website audits, neuromarketing scoring, prompt engineering, AI search optimization, and synthetic focus groups — all via API.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%230009DC'/><text x='50' y='68' font-family='system-ui' font-size='48' font-weight='700' fill='white' text-anchor='middle'>AI</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface-2: #1a1a1a;
+      --surface-3: #222222;
+      --border: #2a2a2a;
+      --border-light: #333333;
+      --text: #e0e0e0;
+      --text-muted: #888888;
+      --text-dim: #666666;
+      --accent: #0009DC;
+      --accent-light: #3344ff;
+      --accent-glow: rgba(0, 9, 220, 0.15);
+      --accent-glow-strong: rgba(0, 9, 220, 0.3);
+      --code-bg: #0d0d0d;
+      --code-border: #1e1e1e;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --orange: #f97316;
+      --sidebar-w: 280px;
+      --header-h: 0px;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-light) transparent;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      padding-left: 38px;
+    }
+
+    .sidebar-nav {
+      padding: 16px 0;
+      flex: 1;
+    }
+
+    .sidebar-section {
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-dim);
+      padding: 8px 12px 6px;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 7px 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .sidebar-link.active {
+      color: white;
+      background: var(--accent-glow);
+    }
+
+    .sidebar-link.sub {
+      padding-left: 28px;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+
+    .sidebar-link.sub:hover {
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer a {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .sidebar-footer a:hover {
+      color: var(--accent-light);
+    }
+
+    /* ===== Mobile menu toggle ===== */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 200;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+    }
+
+    /* ===== Main Content ===== */
+    .main {
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+    }
+
+    .content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      padding: 20px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-light);
+      background: var(--accent-glow);
+      border: 1px solid rgba(0, 9, 220, 0.25);
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--accent-light);
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* ===== Sections ===== */
+    section {
+      margin-bottom: 56px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 24px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      margin: 32px 0 12px;
+      scroll-margin-top: 24px;
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 20px 0 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Lists ===== */
+    ul, ol {
+      margin: 0 0 16px 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    li::marker {
+      color: var(--text-dim);
+    }
+
+    /* ===== Steps ===== */
+    .steps {
+      list-style: none;
+      margin: 0 0 24px 0;
+      counter-reset: step;
+    }
+
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 16px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0, 9, 220, 0.3);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== Code ===== */
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 13px;
+    }
+
+    :not(pre) > code {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      color: #ccc;
+    }
+
+    .code-block {
+      position: relative;
+      margin: 16px 0 20px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--code-border);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--code-border);
+      padding: 8px 16px;
+    }
+
+    .code-lang {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+    }
+
+    .code-copy {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .code-copy:hover {
+      color: var(--text);
+      border-color: var(--border-light);
+      background: var(--surface-3);
+    }
+
+    .code-copy.copied {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    .code-block pre {
+      background: var(--code-bg);
+      padding: 16px 20px;
+      overflow-x: auto;
+      line-height: 1.6;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    /* Syntax colors */
+    .hl-keyword { color: #c678dd; }
+    .hl-string { color: #98c379; }
+    .hl-comment { color: #5c6370; font-style: italic; }
+    .hl-number { color: #d19a66; }
+    .hl-function { color: #61afef; }
+    .hl-property { color: #e06c75; }
+    .hl-variable { color: #e5c07b; }
+    .hl-url { color: #98c379; text-decoration: underline; }
+    .hl-flag { color: #56b6c2; }
+    .hl-header { color: #61afef; }
+
+    /* ===== Tables ===== */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead {
+      background: var(--surface-2);
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface);
+    }
+
+    td code {
+      font-size: 12px;
+    }
+
+    .required {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .optional {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    /* ===== Callout boxes ===== */
+    .callout {
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      margin: 16px 0 20px;
+      font-size: 14px;
+      border: 1px solid;
+    }
+
+    .callout-info {
+      background: rgba(0, 9, 220, 0.06);
+      border-color: rgba(0, 9, 220, 0.2);
+      color: #a0b0ff;
+    }
+
+    .callout-warning {
+      background: rgba(234, 179, 8, 0.06);
+      border-color: rgba(234, 179, 8, 0.2);
+      color: #d4a800;
+    }
+
+    .callout-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== Endpoint blocks ===== */
+    .endpoint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 8px 0 12px;
+      border: 1px solid;
+    }
+
+    .endpoint-post {
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .endpoint-get {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .method {
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .method-post { color: var(--green); }
+    .method-get { color: #3b82f6; }
+
+    .endpoint-path { color: var(--text-muted); }
+
+    /* ===== App cards ===== */
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin: 24px 0;
+    }
+
+    .app-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .app-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0, 9, 220, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .app-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .app-card-time {
+      font-size: 12px;
+      color: var(--text-dim);
+      background: var(--surface-2);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .app-card-base {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    /* ===== Pattern flow ===== */
+    .flow {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0 24px;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      flex: 1;
+      min-width: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .flow-step-title {
+      font-weight: 600;
+      color: white;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .flow-step-detail {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ===== Response format ===== */
+    .response-fields {
+      margin: 16px 0;
+    }
+
+    .response-field {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .response-field:last-child { border-bottom: none; }
+
+    .response-field code {
+      flex-shrink: 0;
+    }
+
+    .response-field-desc {
+      color: var(--text-muted);
+    }
+
+    /* ===== Tab system for code examples ===== */
+    .tabs {
+      margin: 20px 0;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-light);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      margin-top: 64px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .footer a {
+      color: var(--text-muted);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .content {
+        padding: 72px 20px 60px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .flow {
+        flex-direction: column;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+        justify-content: center;
+      }
+
+      .app-card-header {
+        flex-wrap: wrap;
+      }
+
+      .app-card-time {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content {
+        padding: 64px 16px 48px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      h2 { font-size: 20px; }
+      h3 { font-size: 16px; }
+
+      .code-block pre {
+        padding: 12px 14px;
+        font-size: 12px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile menu toggle -->
+  <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">&#9776;</button>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" role="navigation" aria-label="Documentation navigation">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-name">
+        <div class="sidebar-brand-icon">AI</div>
+        AI Digital Labs
+      </div>
+      <div class="sidebar-brand-sub">Developer Documentation</div>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="sidebar-section">
+        <a href="#getting-started" class="sidebar-link">Getting Started</a>
+        <a href="#authentication" class="sidebar-link">Authentication</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">API Reference</div>
+        <a href="#api-pattern" class="sidebar-link">Common Pattern</a>
+        <a href="#website-audit" class="sidebar-link sub">Website Audit</a>
+        <a href="#neuromarketing-audit" class="sidebar-link sub">Neuromarketing Audit</a>
+        <a href="#prompt-engineering" class="sidebar-link sub">Prompt Engineering</a>
+        <a href="#aio-optimization" class="sidebar-link sub">AIO Optimization</a>
+        <a href="#synthetic-focus-group" class="sidebar-link sub">Synthetic Focus Group</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Integration</div>
+        <a href="#response-format" class="sidebar-link">Response Format</a>
+        <a href="#mcp" class="sidebar-link">MCP Integration</a>
+        <a href="#code-examples" class="sidebar-link">Code Examples</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Reference</div>
+        <a href="#rate-limits" class="sidebar-link">Rate Limits &amp; Errors</a>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="https://aidigitallabs.com" target="_blank" rel="noopener">aidigitallabs.com &nearr;</a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="content">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          API v1
+        </div>
+        <h1>AI Digital Labs<br><span>Developer Documentation</span></h1>
+        <p>Build powerful AI-driven marketing analytics into your products. Website audits, neuromarketing scoring, prompt engineering, AI search optimization, and synthetic focus groups &mdash; all via API.</p>
+      </div>
+
+      <!-- Getting Started -->
+      <section id="getting-started">
+        <h2>Getting Started</h2>
+
+        <ol class="steps">
+          <li>Request an API key from your AI Digital Labs account manager</li>
+          <li>Or generate one in the <a href="https://admin.apps.aidigitallabs.com">Admin Console</a></li>
+          <li>Your key starts with <code>aidl_</code> &mdash; keep it secret</li>
+          <li>All API calls use the <code>X-API-Key</code> header</li>
+        </ol>
+
+        <h3>Quick Start (30 seconds)</h3>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code><span class="hl-comment"># Submit a website audit</span>
+curl -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{"website_url": "https://example.com"}'</span>
+
+<span class="hl-comment"># Check status (returns job_id)</span>
+curl https://website-audit.apps.aidigitallabs.com/api/v1/status/<span class="hl-variable">JOB_ID</span> \
+  -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span>
+
+<span class="hl-comment"># Get result</span>
+curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-variable">JOB_ID</span> \
+  -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span></code></pre>
+        </div>
+      </section>
+
+      <!-- Authentication -->
+      <section id="authentication">
+        <h2>Authentication</h2>
+        <p>Every API request must include a valid API key in the <code>X-API-Key</code> header.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Property</th><th>Details</th></tr></thead>
+            <tbody>
+              <tr><td>Format</td><td><code>aidl_</code> followed by 64 hexadecimal characters</td></tr>
+              <tr><td>Header</td><td><code>X-API-Key: aidl_xxxx...</code></td></tr>
+              <tr><td>Scope</td><td>Keys are scoped to specific apps</td></tr>
+              <tr><td>Rate limiting</td><td>Per minute and per day (see <a href="#rate-limits">Rate Limits</a>)</td></tr>
+              <tr><td>Management</td><td><a href="https://admin.apps.aidigitallabs.com">Admin Console</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-title">Security</div>
+          Never expose your API key in client-side code. Always make API calls from your server.
+        </div>
+      </section>
+
+      <!-- API Pattern -->
+      <section id="api-pattern">
+        <h2>API Reference &mdash; Common Pattern</h2>
+        <p>All five tools follow the same asynchronous three-step pattern:</p>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-step-num">Step 1</div>
+            <div class="flow-step-title">Submit</div>
+            <div class="flow-step-detail">POST /api/v1/submit</div>
+            <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns job_id</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">Step 2</div>
+            <div class="flow-step-title">Poll</div>
+            <div class="flow-step-detail">GET /api/v1/status/{job_id}</div>
+            <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns status + progress</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">
+            <div class="flow-step-num">Step 3</div>
+            <div class="flow-step-title">Result</div>
+            <div class="flow-step-detail">GET /api/v1/result/{job_id}</div>
+            <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns full report</div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-title">Tip</div>
+          Poll the status endpoint every 5 seconds. Reports are long-running AI analyses that typically take 1&ndash;15 minutes depending on the tool.
+        </div>
+      </section>
+
+      <!-- Website Audit -->
+      <section id="website-audit">
+        <h3>Website Audit</h3>
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-icon">&#127760;</div>
+            <div class="app-card-title">Website Audit</div>
+            <div class="app-card-time">4&ndash;8 min</div>
+          </div>
+          <div class="app-card-base">https://website-audit.apps.aidigitallabs.com</div>
+          <p>Comprehensive website audit covering SEO, conversion optimization, accessibility, performance, and content quality.</p>
+
+          <div class="endpoint endpoint-post">
+            <span class="method method-post">POST</span>
+            <span class="endpoint-path">/api/v1/submit</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>website_url</code></td><td>string</td><td><span class="required">Required</span></td><td>URL of the website to audit</td></tr>
+                <tr><td><code>brand_name</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Brand or company name for context</td></tr>
+                <tr><td><code>industry</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Industry vertical (e.g. "SaaS", "ecommerce")</td></tr>
+                <tr><td><code>business_model</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Business model (e.g. "B2B", "DTC")</td></tr>
+                <tr><td><code>conversion_goal</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Primary conversion goal (e.g. "demo requests")</td></tr>
+                <tr><td><code>instructions</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional instructions or focus areas</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Request</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>curl -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{
+    "website_url": "https://example.com",
+    "brand_name": "Example Corp",
+    "industry": "SaaS",
+    "conversion_goal": "free trial signups",
+    "instructions": "Focus on mobile conversion funnel"
+  }'</span></code></pre>
+          </div>
+
+          <h4>Example Response</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">json</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>{
+  <span class="hl-property">"job_id"</span>: <span class="hl-string">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>,
+  <span class="hl-property">"status"</span>: <span class="hl-string">"queued"</span>,
+  <span class="hl-property">"message"</span>: <span class="hl-string">"Website audit submitted successfully"</span>
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Neuromarketing Audit -->
+      <section id="neuromarketing-audit">
+        <h3>Neuromarketing Audit</h3>
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-icon">&#129504;</div>
+            <div class="app-card-title">Neuromarketing Audit</div>
+            <div class="app-card-time">8&ndash;12 min</div>
+          </div>
+          <div class="app-card-base">https://neuromarketing-audit.apps.aidigitallabs.com</div>
+          <p>Score creative assets against 41 neuromarketing and color psychology criteria. Analyzes visual hierarchy, cognitive load, emotional triggers, and persuasion patterns.</p>
+
+          <div class="endpoint endpoint-post">
+            <span class="method method-post">POST</span>
+            <span class="endpoint-path">/api/v1/submit</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>asset_url</code></td><td>string</td><td><span class="required">Required</span></td><td>URL of the creative asset (image, landing page)</td></tr>
+                <tr><td><code>brand_name</code></td><td>string</td><td><span class="required">Required</span></td><td>Brand name for contextual scoring</td></tr>
+                <tr><td><code>asset_type</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Type: "landing_page", "banner", "email", "social"</td></tr>
+                <tr><td><code>offer</code></td><td>string</td><td><span class="optional">Optional</span></td><td>The offer or value proposition being presented</td></tr>
+                <tr><td><code>target_audience</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Description of the target audience</td></tr>
+                <tr><td><code>instructions</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional analysis instructions</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Request</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>curl -X POST https://neuromarketing-audit.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{
+    "asset_url": "https://example.com/landing-page",
+    "brand_name": "Example Corp",
+    "asset_type": "landing_page",
+    "target_audience": "Marketing managers at mid-size companies"
+  }'</span></code></pre>
+          </div>
+
+          <h4>Example Response</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">json</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>{
+  <span class="hl-property">"job_id"</span>: <span class="hl-string">"b2c3d4e5-f6a7-8901-bcde-f12345678901"</span>,
+  <span class="hl-property">"status"</span>: <span class="hl-string">"queued"</span>,
+  <span class="hl-property">"message"</span>: <span class="hl-string">"Neuromarketing audit submitted successfully"</span>
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Prompt Engineering -->
+      <section id="prompt-engineering">
+        <h3>Prompt Engineering</h3>
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-icon">&#9999;&#65039;</div>
+            <div class="app-card-title">Prompt Engineering</div>
+            <div class="app-card-time">1&ndash;3 min</div>
+          </div>
+          <div class="app-card-base">https://prompt-engineer.apps.aidigitallabs.com</div>
+          <p>Design, test, and optimize AI prompts. Submit an existing prompt for improvement or describe an idea and get a production-ready prompt.</p>
+
+          <div class="endpoint endpoint-post">
+            <span class="method method-post">POST</span>
+            <span class="endpoint-path">/api/v1/submit</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>prompt_text</code></td><td>string</td><td><span class="required">Required*</span></td><td>Existing prompt to optimize (*one of prompt_text or prompt_idea required)</td></tr>
+                <tr><td><code>prompt_idea</code></td><td>string</td><td><span class="required">Required*</span></td><td>Description of what you want the prompt to do</td></tr>
+                <tr><td><code>model_target</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Target model (e.g. "gpt-4", "claude", "gemini")</td></tr>
+                <tr><td><code>use_case</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Use case category (e.g. "content", "code", "analysis")</td></tr>
+                <tr><td><code>instructions</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional requirements or constraints</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Request</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>curl -X POST https://prompt-engineer.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{
+    "prompt_idea": "A prompt that generates SEO meta descriptions for product pages",
+    "model_target": "gpt-4",
+    "use_case": "content"
+  }'</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- AIO Optimization -->
+      <section id="aio-optimization">
+        <h3>AIO Optimization</h3>
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-icon">&#128269;</div>
+            <div class="app-card-title">AIO Optimization</div>
+            <div class="app-card-time">10&ndash;15 min</div>
+          </div>
+          <div class="app-card-base">https://aio-optimization.apps.aidigitallabs.com</div>
+          <p>Audit how visible a brand, product, or concept is across AI search engines (ChatGPT, Perplexity, Gemini, Claude). Measures AI engine awareness and provides optimization recommendations.</p>
+
+          <div class="endpoint endpoint-post">
+            <span class="method method-post">POST</span>
+            <span class="endpoint-path">/api/v1/submit</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>concept_name</code></td><td>string</td><td><span class="required">Required</span></td><td>Brand, product, or concept to audit</td></tr>
+                <tr><td><code>concept_type</code></td><td>string</td><td><span class="required">Required</span></td><td>Type: "brand", "product", "service", "person"</td></tr>
+                <tr><td><code>concept_category</code></td><td>string</td><td><span class="required">Required</span></td><td>Industry or category (e.g. "athletic footwear")</td></tr>
+                <tr><td><code>concept_context</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional context about the concept</td></tr>
+                <tr><td><code>query_count</code></td><td>number</td><td><span class="optional">Optional</span></td><td>Number of AI queries to run (default: 20)</td></tr>
+                <tr><td><code>instructions</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional instructions</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Request</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>curl -X POST https://aio-optimization.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{
+    "concept_name": "Acme Analytics",
+    "concept_type": "product",
+    "concept_category": "marketing analytics software",
+    "query_count": 30
+  }'</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Synthetic Focus Group -->
+      <section id="synthetic-focus-group">
+        <h3>Synthetic Focus Group</h3>
+        <div class="app-card">
+          <div class="app-card-header">
+            <div class="app-card-icon">&#128101;</div>
+            <div class="app-card-title">Synthetic Focus Group</div>
+            <div class="app-card-time">8&ndash;12 min</div>
+          </div>
+          <div class="app-card-base">https://synthetic-focus-group.apps.aidigitallabs.com</div>
+          <p>Simulate AI-powered focus groups with diverse synthetic personas. Get qualitative feedback on products, campaigns, and creative concepts without recruiting real participants.</p>
+
+          <div class="endpoint endpoint-post">
+            <span class="method method-post">POST</span>
+            <span class="endpoint-path">/api/v1/submit</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Type</th><th></th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>brand_name</code></td><td>string</td><td><span class="required">Required</span></td><td>Brand or company name</td></tr>
+                <tr><td><code>product_description</code></td><td>string</td><td><span class="required">Required</span></td><td>Description of the product or concept to test</td></tr>
+                <tr><td><code>product_category</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Category (e.g. "energy drinks", "SaaS")</td></tr>
+                <tr><td><code>campaign_objective</code></td><td>string</td><td><span class="optional">Optional</span></td><td>What you want to learn from the focus group</td></tr>
+                <tr><td><code>creative_urls</code></td><td>string[]</td><td><span class="optional">Optional</span></td><td>URLs of creative assets to evaluate</td></tr>
+                <tr><td><code>instructions</code></td><td>string</td><td><span class="optional">Optional</span></td><td>Additional instructions or focus areas</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Example Request</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>curl -X POST https://synthetic-focus-group.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{
+    "brand_name": "VoltBrew",
+    "product_description": "A new cold-brew energy drink with adaptogens, targeting health-conscious millennials",
+    "product_category": "functional beverages",
+    "campaign_objective": "Test brand positioning and packaging appeal",
+    "creative_urls": ["https://example.com/can-design-v1.jpg"]
+  }'</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Response Format -->
+      <section id="response-format">
+        <h2>Response Format</h2>
+        <p>All tools return the same response structure when a job completes:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">json</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>{
+  <span class="hl-property">"job_id"</span>: <span class="hl-string">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span>,
+  <span class="hl-property">"status"</span>: <span class="hl-string">"complete"</span>,
+  <span class="hl-property">"has_visual_report"</span>: <span class="hl-number">true</span>,
+  <span class="hl-property">"markdown_report"</span>: <span class="hl-string">"# AUDIT REPORT\n\n## Executive Summary\n..."</span>,
+  <span class="hl-property">"visual_report"</span>: {
+    <span class="hl-property">"schema_version"</span>: <span class="hl-string">"2.0"</span>,
+    <span class="hl-property">"sections"</span>: [...]
+  },
+  <span class="hl-property">"report_url"</span>: <span class="hl-string">"https://website-audit.apps.aidigitallabs.com/r/abc123?theme=client"</span>
+}</code></pre>
+        </div>
+
+        <h3>Response Fields</h3>
+        <div class="response-fields">
+          <div class="response-field">
+            <code>markdown_report</code>
+            <span class="response-field-desc">Raw markdown text. Works everywhere &mdash; paste into documents, render in your UI, or feed to another AI.</span>
+          </div>
+          <div class="response-field">
+            <code>visual_report</code>
+            <span class="response-field-desc">Structured JSON with typed sections, scores, and data. Build your own custom UI on top of this.</span>
+          </div>
+          <div class="response-field">
+            <code>report_url</code>
+            <span class="response-field-desc">Hosted interactive report URL. Supports white-label theming via the <code>?theme=</code> parameter.</span>
+          </div>
+        </div>
+
+        <h3>Status Values</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Status</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>queued</code></td><td>Job received, waiting to start</td></tr>
+              <tr><td><code>processing</code></td><td>AI analysis in progress</td></tr>
+              <tr><td><code>complete</code></td><td>Report ready &mdash; fetch with /result endpoint</td></tr>
+              <tr><td><code>error</code></td><td>Job failed (check <code>error</code> field for details)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- MCP Integration -->
+      <section id="mcp">
+        <h2>MCP Integration</h2>
+        <p>Use AI Digital Labs tools directly from <strong>Claude Code</strong>, <strong>Claude Desktop</strong>, or any <strong>MCP-compatible AI assistant</strong>. No HTTP calls needed &mdash; just ask in natural language.</p>
+
+        <h3>Install</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>npm install -g @aidigital/labs-mcp</code></pre>
+        </div>
+
+        <h3>Configure for Claude Code</h3>
+        <p>Add to <code>.mcp.json</code> in your project root:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">json</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>{
+  <span class="hl-property">"mcpServers"</span>: {
+    <span class="hl-property">"aidigital-labs"</span>: {
+      <span class="hl-property">"command"</span>: <span class="hl-string">"npx"</span>,
+      <span class="hl-property">"args"</span>: [<span class="hl-string">"@aidigital/labs-mcp"</span>],
+      <span class="hl-property">"env"</span>: {
+        <span class="hl-property">"AIDIGITAL_API_KEY"</span>: <span class="hl-string">"aidl_your_key_here"</span>
+      }
+    }
+  }
+}</code></pre>
+        </div>
+
+        <h3>Configure for Claude Desktop</h3>
+        <p>Add to <code>claude_desktop_config.json</code>:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">json</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>{
+  <span class="hl-property">"mcpServers"</span>: {
+    <span class="hl-property">"aidigital-labs"</span>: {
+      <span class="hl-property">"command"</span>: <span class="hl-string">"npx"</span>,
+      <span class="hl-property">"args"</span>: [<span class="hl-string">"-y"</span>, <span class="hl-string">"@aidigital/labs-mcp"</span>],
+      <span class="hl-property">"env"</span>: {
+        <span class="hl-property">"AIDIGITAL_API_KEY"</span>: <span class="hl-string">"aidl_your_key_here"</span>
+      }
+    }
+  }
+}</code></pre>
+        </div>
+
+        <h3>Available Tools</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tool</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>website_audit</code></td><td>Comprehensive website audit (SEO, conversion, accessibility)</td></tr>
+              <tr><td><code>neuromarketing_audit</code></td><td>Score creative assets against 41 neuromarketing criteria</td></tr>
+              <tr><td><code>prompt_engineering</code></td><td>Design, test, and optimize AI prompts</td></tr>
+              <tr><td><code>aio_scan</code></td><td>Audit AI engine awareness of a brand</td></tr>
+              <tr><td><code>synthetic_focus_group</code></td><td>Simulate AI-powered focus groups</td></tr>
+              <tr><td><code>check_status</code></td><td>Check job progress</td></tr>
+              <tr><td><code>get_result</code></td><td>Get completed report</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Usage Examples</h3>
+        <p>Just ask your AI assistant naturally:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">natural language</span>
+          </div>
+          <pre><code><span class="hl-string">"Run a website audit on example.com focusing on mobile conversion"</span>
+
+<span class="hl-string">"Analyze this banner for neuromarketing: https://example.com/banner.jpg"</span>
+
+<span class="hl-string">"Optimize this prompt for GPT-4: [your prompt]"</span>
+
+<span class="hl-string">"How visible is Nike on AI search engines?"</span>
+
+<span class="hl-string">"Simulate a focus group for this new energy drink concept"</span></code></pre>
+        </div>
+      </section>
+
+      <!-- Code Examples -->
+      <section id="code-examples">
+        <h2>Code Examples</h2>
+
+        <div class="tabs">
+          <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-python')">Python</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-node')">Node.js</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-curl')">cURL</button>
+          </div>
+
+          <div id="tab-python" class="tab-content active">
+            <div class="code-block" style="margin-top:0;border-top:none;border-radius:0 0 8px 8px;">
+              <div class="code-header">
+                <span class="code-lang">python</span>
+                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code><span class="hl-keyword">import</span> requests, time
+
+API_KEY = <span class="hl-string">"aidl_your_key_here"</span>
+BASE = <span class="hl-string">"https://website-audit.apps.aidigitallabs.com"</span>
+
+<span class="hl-comment"># Submit</span>
+r = requests.<span class="hl-function">post</span>(
+    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/submit"</span>,
+    headers={<span class="hl-string">"X-API-Key"</span>: API_KEY, <span class="hl-string">"Content-Type"</span>: <span class="hl-string">"application/json"</span>},
+    json={
+        <span class="hl-string">"website_url"</span>: <span class="hl-string">"https://example.com"</span>,
+        <span class="hl-string">"instructions"</span>: <span class="hl-string">"Focus on mobile conversion funnel"</span>
+    }
+)
+job_id = r.<span class="hl-function">json</span>()[<span class="hl-string">"job_id"</span>]
+<span class="hl-function">print</span>(<span class="hl-string">f"Job submitted: <span class="hl-variable">{job_id}</span>"</span>)
+
+<span class="hl-comment"># Poll until complete</span>
+<span class="hl-keyword">while</span> <span class="hl-number">True</span>:
+    s = requests.<span class="hl-function">get</span>(
+        <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/status/<span class="hl-variable">{job_id}</span>"</span>,
+        headers={<span class="hl-string">"X-API-Key"</span>: API_KEY}
+    ).<span class="hl-function">json</span>()
+    <span class="hl-function">print</span>(<span class="hl-string">f"Status: <span class="hl-variable">{s['status']}</span>"</span>)
+    <span class="hl-keyword">if</span> s[<span class="hl-string">"status"</span>] == <span class="hl-string">"complete"</span>:
+        <span class="hl-keyword">break</span>
+    <span class="hl-keyword">if</span> s[<span class="hl-string">"status"</span>] == <span class="hl-string">"error"</span>:
+        <span class="hl-keyword">raise</span> <span class="hl-function">Exception</span>(<span class="hl-string">f"Job failed: <span class="hl-variable">{s.get('error')}</span>"</span>)
+    time.<span class="hl-function">sleep</span>(<span class="hl-number">5</span>)
+
+<span class="hl-comment"># Get result</span>
+result = requests.<span class="hl-function">get</span>(
+    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/result/<span class="hl-variable">{job_id}</span>"</span>,
+    headers={<span class="hl-string">"X-API-Key"</span>: API_KEY}
+).<span class="hl-function">json</span>()
+
+<span class="hl-function">print</span>(<span class="hl-string">f"\nReport URL: <span class="hl-variable">{result['report_url']}</span>"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Markdown: <span class="hl-variable">{len(result['markdown_report'])}</span> chars"</span>)
+<span class="hl-function">print</span>(<span class="hl-string">f"Visual report available: <span class="hl-variable">{result['has_visual_report']}</span>"</span>)</code></pre>
+            </div>
+          </div>
+
+          <div id="tab-node" class="tab-content">
+            <div class="code-block" style="margin-top:0;border-top:none;border-radius:0 0 8px 8px;">
+              <div class="code-header">
+                <span class="code-lang">javascript</span>
+                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code><span class="hl-keyword">const</span> API_KEY = <span class="hl-string">'aidl_your_key_here'</span>;
+<span class="hl-keyword">const</span> BASE = <span class="hl-string">'https://website-audit.apps.aidigitallabs.com'</span>;
+
+<span class="hl-keyword">async function</span> <span class="hl-function">runAudit</span>(url) {
+  <span class="hl-comment">// Submit</span>
+  <span class="hl-keyword">const</span> { job_id } = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/submit`</span>, {
+    method: <span class="hl-string">'POST'</span>,
+    headers: {
+      <span class="hl-string">'X-API-Key'</span>: API_KEY,
+      <span class="hl-string">'Content-Type'</span>: <span class="hl-string">'application/json'</span>
+    },
+    body: JSON.<span class="hl-function">stringify</span>({ website_url: url }),
+  }).<span class="hl-function">then</span>(r => r.<span class="hl-function">json</span>());
+
+  console.<span class="hl-function">log</span>(<span class="hl-string">`Job submitted: <span class="hl-variable">${job_id}</span>`</span>);
+
+  <span class="hl-comment">// Poll</span>
+  <span class="hl-keyword">let</span> status;
+  <span class="hl-keyword">do</span> {
+    <span class="hl-keyword">await new</span> <span class="hl-function">Promise</span>(r => <span class="hl-function">setTimeout</span>(r, <span class="hl-number">5000</span>));
+    status = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(
+      <span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/status/<span class="hl-variable">${job_id}</span>`</span>,
+      { headers: { <span class="hl-string">'X-API-Key'</span>: API_KEY } }
+    ).<span class="hl-function">then</span>(r => r.<span class="hl-function">json</span>());
+    console.<span class="hl-function">log</span>(<span class="hl-string">`Status: <span class="hl-variable">${status.status}</span>`</span>);
+  } <span class="hl-keyword">while</span> (status.status !== <span class="hl-string">'complete'</span> && status.status !== <span class="hl-string">'error'</span>);
+
+  <span class="hl-keyword">if</span> (status.status === <span class="hl-string">'error'</span>) {
+    <span class="hl-keyword">throw new</span> <span class="hl-function">Error</span>(<span class="hl-string">`Job failed: <span class="hl-variable">${status.error}</span>`</span>);
+  }
+
+  <span class="hl-comment">// Result</span>
+  <span class="hl-keyword">return</span> <span class="hl-function">fetch</span>(
+    <span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/result/<span class="hl-variable">${job_id}</span>`</span>,
+    { headers: { <span class="hl-string">'X-API-Key'</span>: API_KEY } }
+  ).<span class="hl-function">then</span>(r => r.<span class="hl-function">json</span>());
+}
+
+<span class="hl-function">runAudit</span>(<span class="hl-string">'https://example.com'</span>).<span class="hl-function">then</span>(console.log);</code></pre>
+            </div>
+          </div>
+
+          <div id="tab-curl" class="tab-content">
+            <div class="code-block" style="margin-top:0;border-top:none;border-radius:0 0 8px 8px;">
+              <div class="code-header">
+                <span class="code-lang">bash</span>
+                <button class="code-copy" onclick="copyCode(this)">Copy</button>
+              </div>
+              <pre><code><span class="hl-comment"># Step 1: Submit</span>
+curl -s -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
+  -H <span class="hl-string">"Content-Type: application/json"</span> \
+  -d <span class="hl-string">'{"website_url": "https://example.com"}'</span>
+<span class="hl-comment"># → {"job_id": "abc-123-def"}</span>
+
+<span class="hl-comment"># Step 2: Poll status (repeat until "complete")</span>
+curl -s https://website-audit.apps.aidigitallabs.com/api/v1/status/<span class="hl-variable">abc-123-def</span> \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span>
+<span class="hl-comment"># → {"status": "processing", "progress": 65}</span>
+
+<span class="hl-comment"># Step 3: Get result</span>
+curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-variable">abc-123-def</span> \
+  -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span>
+<span class="hl-comment"># → {"job_id": "...", "status": "complete", "markdown_report": "...", ...}</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rate Limits & Errors -->
+      <section id="rate-limits">
+        <h2>Rate Limits &amp; Errors</h2>
+
+        <h3>Default Limits</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Limit</th><th>Default</th><th>Adjustable</th></tr></thead>
+            <tbody>
+              <tr><td>Requests per minute</td><td>10</td><td>Yes (contact admin)</td></tr>
+              <tr><td>Requests per day</td><td>1,000</td><td>Yes (contact admin)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Error Codes</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Code</th><th>Meaning</th><th>What to Do</th></tr></thead>
+            <tbody>
+              <tr><td><code>400</code></td><td>Bad Request</td><td>Check required fields in your request body</td></tr>
+              <tr><td><code>401</code></td><td>Unauthorized</td><td>Verify your API key is valid and included in the header</td></tr>
+              <tr><td><code>403</code></td><td>Forbidden</td><td>Rate limit exceeded or key not scoped for this app</td></tr>
+              <tr><td><code>404</code></td><td>Not Found</td><td>Job ID does not exist or has expired</td></tr>
+              <tr><td><code>500</code></td><td>Server Error</td><td>Retry after a few seconds; contact support if persistent</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Error Response Format</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">json</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>{
+  <span class="hl-property">"error"</span>: <span class="hl-string">"Rate limit exceeded"</span>,
+  <span class="hl-property">"code"</span>: <span class="hl-number">403</span>,
+  <span class="hl-property">"retry_after"</span>: <span class="hl-number">30</span>
+}</code></pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-title">Rate limit headers</div>
+          Every response includes <code>X-RateLimit-Remaining</code> and <code>X-RateLimit-Reset</code> headers so you can implement proactive throttling.
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p><strong>AI Digital Labs</strong> &mdash; <a href="https://developers.apps.aidigitallabs.com">developers.apps.aidigitallabs.com</a></p>
+        <p style="margin-top:8px">&copy; 2026 AI Digital. All rights reserved.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Copy code to clipboard
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      const text = pre.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Tab switching
+    function switchTab(e, tabId) {
+      const tabs = e.target.closest('.tabs');
+      tabs.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      tabs.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      e.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      document.querySelector('.sidebar').classList.toggle('open');
+      document.querySelector('.sidebar-overlay').classList.toggle('open');
+    }
+
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          document.querySelector('.sidebar').classList.remove('open');
+          document.querySelector('.sidebar-overlay').classList.remove('open');
+        }
+      });
+    });
+
+    // Active sidebar link tracking
+    const sections = document.querySelectorAll('section[id], .hero');
+    const navLinks = document.querySelectorAll('.sidebar-link[href]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    sections.forEach(section => {
+      if (section.id) observer.observe(section);
+    });
+  </script>
+
+</body>
+</html>
