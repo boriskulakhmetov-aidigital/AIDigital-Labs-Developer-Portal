@@ -2143,17 +2143,20 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
                 <pre><code id="wiz-config-json"></code></pre>
               </div>
             </div>
-            <button class="wizard-copy-big" id="wiz-copy-config" onclick="wizardCopyConfig()">Copy Config to Clipboard</button>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+              <button class="wizard-copy-big" id="wiz-download-config" onclick="wizardDownloadConfig()" style="background: var(--accent); flex: 1;">⬇ Download claude_desktop_config.json</button>
+              <button class="wizard-copy-big" id="wiz-copy-config" onclick="wizardCopyConfig()" style="background: var(--surface-2); border: 1px solid var(--border); flex: 1;">Copy to Clipboard</button>
+            </div>
             <div class="wizard-nav">
               <button class="wizard-nav-btn prev" onclick="goToWizardStep(1)">&larr; Back</button>
-              <button class="wizard-nav-btn next" onclick="goToWizardStep(3)">Next &rarr;</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(3)">Where to save it &rarr;</button>
             </div>
           </div>
 
           <!-- Step 4: File Path -->
           <div class="wizard-panel" id="wiz-step-3">
-            <h4>Where to save the config</h4>
-            <p>Paste the config into this file (create it if it does not exist):</p>
+            <h4>Where to save the downloaded file</h4>
+            <p>Move the downloaded <code>claude_desktop_config.json</code> to this folder:</p>
             <div id="wiz-path-windows" class="wizard-path-box">
               <div class="wizard-path-label">Windows</div>
               <div class="wizard-path-value">%APPDATA%\Claude\claude_desktop_config.json</div>
@@ -2891,14 +2894,30 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
       if (step >= 2) updateWizardConfig();
     }
 
+    function wizardDownloadConfig() {
+      const config = getWizardConfig();
+      const blob = new Blob([config], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'claude_desktop_config.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      const btn = document.getElementById('wiz-download-config');
+      btn.textContent = '✓ Downloaded!';
+      setTimeout(() => { btn.textContent = '⬇ Download claude_desktop_config.json'; }, 2000);
+    }
+
     function wizardCopyConfig() {
       const config = getWizardConfig();
       navigator.clipboard.writeText(config).then(() => {
         const btn = document.getElementById('wiz-copy-config');
-        btn.textContent = 'Copied!';
+        btn.textContent = '✓ Copied!';
         btn.classList.add('copied');
         setTimeout(() => {
-          btn.textContent = 'Copy Config to Clipboard';
+          btn.textContent = 'Copy to Clipboard';
           btn.classList.remove('copied');
         }, 2000);
       });
