@@ -1124,6 +1124,333 @@
       }
     }
 
+    /* ===== MCP Setup Wizard ===== */
+    .wizard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 24px 0;
+    }
+
+    .wizard-steps {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .wizard-step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .wizard-step-indicator:hover {
+      color: var(--text-muted);
+      border-color: var(--border-light);
+    }
+
+    .wizard-step-indicator.active {
+      color: var(--accent-light);
+      background: var(--accent-glow);
+      border-color: rgba(0, 9, 220, 0.3);
+    }
+
+    .wizard-step-indicator.completed {
+      color: var(--green);
+      background: rgba(34, 197, 94, 0.08);
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .wizard-step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--surface-3);
+      flex-shrink: 0;
+    }
+
+    .wizard-step-indicator.active .wizard-step-num {
+      background: var(--accent);
+      color: white;
+    }
+
+    .wizard-step-indicator.completed .wizard-step-num {
+      background: var(--green);
+      color: white;
+    }
+
+    .wizard-panel {
+      display: none;
+      animation: wizardFadeIn 0.2s ease;
+    }
+
+    .wizard-panel.active {
+      display: block;
+    }
+
+    @keyframes wizardFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wizard-panel h4 {
+      font-size: 17px;
+      color: white;
+      margin: 0 0 8px;
+    }
+
+    .wizard-panel p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .wizard-input-group {
+      margin: 16px 0;
+    }
+
+    .wizard-input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .wizard-input-group input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    .wizard-input-group input:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .wizard-input-group input.invalid {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .wizard-input-group input.valid {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    }
+
+    .wizard-validation {
+      font-size: 12px;
+      margin-top: 6px;
+      min-height: 18px;
+    }
+
+    .wizard-validation.error { color: var(--red); }
+    .wizard-validation.success { color: var(--green); }
+
+    .os-toggle {
+      display: inline-flex;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .os-toggle-btn {
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      background: var(--surface-2);
+      color: var(--text-dim);
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .os-toggle-btn:not(:last-child) {
+      border-right: 1px solid var(--border);
+    }
+
+    .os-toggle-btn:hover {
+      color: var(--text);
+    }
+
+    .os-toggle-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .wizard-config-output {
+      position: relative;
+      margin: 16px 0;
+    }
+
+    .wizard-copy-big {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+      margin: 16px 0;
+    }
+
+    .wizard-copy-big:hover {
+      background: var(--accent-light);
+      box-shadow: 0 4px 20px var(--accent-glow-strong);
+    }
+
+    .wizard-copy-big.copied {
+      background: var(--green);
+    }
+
+    .wizard-path-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+
+    .wizard-path-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .wizard-path-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent-light);
+      word-break: break-all;
+    }
+
+    .wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      gap: 12px;
+    }
+
+    .wizard-nav-btn {
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .wizard-nav-btn.prev {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .wizard-nav-btn.prev:hover {
+      color: var(--text);
+      border-color: var(--border-light);
+    }
+
+    .wizard-nav-btn.next {
+      background: var(--accent);
+      color: white;
+      border: none;
+      margin-left: auto;
+    }
+
+    .wizard-nav-btn.next:hover {
+      background: var(--accent-light);
+      box-shadow: 0 4px 20px var(--accent-glow-strong);
+    }
+
+    .wizard-nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .wizard-success {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .wizard-success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.1);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+    }
+
+    .wizard-success h4 {
+      color: var(--green);
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .wizard-try-list {
+      list-style: none;
+      margin: 20px auto;
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .wizard-try-list li {
+      padding: 8px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wizard-try-list li:last-child {
+      border-bottom: none;
+    }
+
+    .wizard-try-list li code {
+      color: var(--accent-light);
+    }
+
     @media (max-width: 480px) {
       .content {
         padding: 64px 16px 48px;
@@ -1188,6 +1515,7 @@
         <div class="sidebar-section-title">Integration</div>
         <a href="#response-format" class="sidebar-link">Response Format</a>
         <a href="#mcp" class="sidebar-link">MCP Integration</a>
+        <a href="#mcp-setup" class="sidebar-link sub">Setup Wizard</a>
         <a href="#code-examples" class="sidebar-link">Code Examples</a>
       </div>
 
@@ -1692,55 +2020,6 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
         <h2>MCP Integration</h2>
         <p>Use AI Digital Labs tools directly from <strong>Claude Code</strong>, <strong>Claude Desktop</strong>, or any <strong>MCP-compatible AI assistant</strong>. No HTTP calls needed &mdash; just ask in natural language.</p>
 
-        <h3>Install</h3>
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-lang">bash</span>
-            <button class="code-copy" onclick="copyCode(this)">Copy</button>
-          </div>
-          <pre><code>npm install -g @aidigital/labs-mcp</code></pre>
-        </div>
-
-        <h3>Configure for Claude Code</h3>
-        <p>Add to <code>.mcp.json</code> in your project root:</p>
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-lang">json</span>
-            <button class="code-copy" onclick="copyCode(this)">Copy</button>
-          </div>
-          <pre><code>{
-  <span class="hl-property">"mcpServers"</span>: {
-    <span class="hl-property">"aidigital-labs"</span>: {
-      <span class="hl-property">"command"</span>: <span class="hl-string">"npx"</span>,
-      <span class="hl-property">"args"</span>: [<span class="hl-string">"@aidigital/labs-mcp"</span>],
-      <span class="hl-property">"env"</span>: {
-        <span class="hl-property">"AIDIGITAL_API_KEY"</span>: <span class="hl-string">"aidl_your_key_here"</span>
-      }
-    }
-  }
-}</code></pre>
-        </div>
-
-        <h3>Configure for Claude Desktop</h3>
-        <p>Add to <code>claude_desktop_config.json</code>:</p>
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-lang">json</span>
-            <button class="code-copy" onclick="copyCode(this)">Copy</button>
-          </div>
-          <pre><code>{
-  <span class="hl-property">"mcpServers"</span>: {
-    <span class="hl-property">"aidigital-labs"</span>: {
-      <span class="hl-property">"command"</span>: <span class="hl-string">"npx"</span>,
-      <span class="hl-property">"args"</span>: [<span class="hl-string">"-y"</span>, <span class="hl-string">"@aidigital/labs-mcp"</span>],
-      <span class="hl-property">"env"</span>: {
-        <span class="hl-property">"AIDIGITAL_API_KEY"</span>: <span class="hl-string">"aidl_your_key_here"</span>
-      }
-    }
-  }
-}</code></pre>
-        </div>
-
         <h3>Available Tools</h3>
         <div class="table-wrap">
           <table>
@@ -1772,6 +2051,173 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 <span class="hl-string">"How visible is Nike on AI search engines?"</span>
 
 <span class="hl-string">"Simulate a focus group for this new energy drink concept"</span></code></pre>
+        </div>
+
+        <h3>Configure for Claude Code</h3>
+        <p>Add to <code>.mcp.json</code> in your project root:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">json</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>{
+  <span class="hl-property">"mcpServers"</span>: {
+    <span class="hl-property">"aidigital-labs"</span>: {
+      <span class="hl-property">"command"</span>: <span class="hl-string">"npx"</span>,
+      <span class="hl-property">"args"</span>: [<span class="hl-string">"@aidigital/labs-mcp"</span>],
+      <span class="hl-property">"env"</span>: {
+        <span class="hl-property">"AIDIGITAL_API_KEY"</span>: <span class="hl-string">"aidl_your_key_here"</span>
+      }
+    }
+  }
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- MCP Setup Wizard -->
+      <section id="mcp-setup">
+        <h2>Setup MCP for Claude Desktop</h2>
+        <p>Interactive setup &mdash; no downloads, no installers. Just copy-paste.</p>
+
+        <div class="wizard" id="mcp-wizard">
+          <!-- Step indicators -->
+          <div class="wizard-steps">
+            <button class="wizard-step-indicator active" onclick="goToWizardStep(0)">
+              <span class="wizard-step-num">1</span> API Key
+            </button>
+            <button class="wizard-step-indicator" onclick="goToWizardStep(1)">
+              <span class="wizard-step-num">2</span> Select OS
+            </button>
+            <button class="wizard-step-indicator" onclick="goToWizardStep(2)">
+              <span class="wizard-step-num">3</span> Config
+            </button>
+            <button class="wizard-step-indicator" onclick="goToWizardStep(3)">
+              <span class="wizard-step-num">4</span> File Path
+            </button>
+            <button class="wizard-step-indicator" onclick="goToWizardStep(4)">
+              <span class="wizard-step-num">5</span> Terminal
+            </button>
+            <button class="wizard-step-indicator" onclick="goToWizardStep(5)">
+              <span class="wizard-step-num">6</span> Done
+            </button>
+          </div>
+
+          <!-- Step 1: API Key -->
+          <div class="wizard-panel active" id="wiz-step-0">
+            <h4>Enter your API Key</h4>
+            <p>Paste the API key from your <a href="https://admin.apps.aidigitallabs.com">Admin Console</a>.</p>
+            <div class="wizard-input-group">
+              <label for="wiz-api-key">API Key</label>
+              <input type="text" id="wiz-api-key" placeholder="aidl_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" spellcheck="false" autocomplete="off" />
+              <div class="wizard-validation" id="wiz-key-validation"></div>
+            </div>
+            <div class="wizard-nav">
+              <span></span>
+              <button class="wizard-nav-btn next" id="wiz-next-0" disabled onclick="goToWizardStep(1)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Select OS -->
+          <div class="wizard-panel" id="wiz-step-1">
+            <h4>Select your operating system</h4>
+            <p>This determines the config file path and terminal commands.</p>
+            <div class="os-toggle" id="wiz-os-toggle">
+              <button class="os-toggle-btn active" onclick="setWizardOS('windows')">Windows</button>
+              <button class="os-toggle-btn" onclick="setWizardOS('mac')">Mac</button>
+            </div>
+            <div class="wizard-nav">
+              <button class="wizard-nav-btn prev" onclick="goToWizardStep(0)">&larr; Back</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(2)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Generated Config -->
+          <div class="wizard-panel" id="wiz-step-2">
+            <h4>Your generated config</h4>
+            <p>This is your complete <code>claude_desktop_config.json</code> file:</p>
+            <div class="wizard-config-output">
+              <div class="code-block" style="margin:16px 0 0">
+                <div class="code-header">
+                  <span class="code-lang">claude_desktop_config.json</span>
+                </div>
+                <pre><code id="wiz-config-json"></code></pre>
+              </div>
+            </div>
+            <button class="wizard-copy-big" id="wiz-copy-config" onclick="wizardCopyConfig()">Copy Config to Clipboard</button>
+            <div class="wizard-nav">
+              <button class="wizard-nav-btn prev" onclick="goToWizardStep(1)">&larr; Back</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(3)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Step 4: File Path -->
+          <div class="wizard-panel" id="wiz-step-3">
+            <h4>Where to save the config</h4>
+            <p>Paste the config into this file (create it if it does not exist):</p>
+            <div id="wiz-path-windows" class="wizard-path-box">
+              <div class="wizard-path-label">Windows</div>
+              <div class="wizard-path-value">%APPDATA%\Claude\claude_desktop_config.json</div>
+              <p style="font-size:12px;color:var(--text-dim);margin:8px 0 0">Typically: <code>C:\Users\YourName\AppData\Roaming\Claude\claude_desktop_config.json</code></p>
+              <p style="font-size:12px;color:var(--text-dim);margin:4px 0 0">To open the folder: press <code>Win+R</code>, type <code>%APPDATA%\Claude</code>, press Enter.</p>
+            </div>
+            <div id="wiz-path-mac" class="wizard-path-box" style="display:none">
+              <div class="wizard-path-label">Mac</div>
+              <div class="wizard-path-value">~/Library/Application Support/Claude/claude_desktop_config.json</div>
+              <p style="font-size:12px;color:var(--text-dim);margin:8px 0 0">To open in Finder: press <code>Cmd+Shift+G</code> and paste the path above.</p>
+            </div>
+            <div class="wizard-nav">
+              <button class="wizard-nav-btn prev" onclick="goToWizardStep(2)">&larr; Back</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(4)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Step 5: Terminal Commands -->
+          <div class="wizard-panel" id="wiz-step-4">
+            <h4>Or create the file from your terminal</h4>
+            <p>Run this command to create the config file automatically:</p>
+            <div id="wiz-terminal-windows">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">PowerShell</span>
+                  <button class="code-copy" onclick="wizardCopyTerminal('windows')">Copy</button>
+                </div>
+                <pre><code id="wiz-cmd-windows"></code></pre>
+              </div>
+            </div>
+            <div id="wiz-terminal-mac" style="display:none">
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Terminal (bash/zsh)</span>
+                  <button class="code-copy" onclick="wizardCopyTerminal('mac')">Copy</button>
+                </div>
+                <pre><code id="wiz-cmd-mac"></code></pre>
+              </div>
+            </div>
+            <div class="wizard-nav">
+              <button class="wizard-nav-btn prev" onclick="goToWizardStep(3)">&larr; Back</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(5)">Next &rarr;</button>
+            </div>
+          </div>
+
+          <!-- Step 6: Done -->
+          <div class="wizard-panel" id="wiz-step-5">
+            <div class="wizard-success">
+              <div class="wizard-success-icon">&#10003;</div>
+              <h4>Restart Claude Desktop and you're done!</h4>
+              <p>After restarting, the AI Digital Labs tools will appear automatically. Try asking:</p>
+              <ul class="wizard-try-list">
+                <li><code>"Run a website audit on example.com"</code></li>
+                <li><code>"Analyze this banner for neuromarketing"</code></li>
+                <li><code>"How visible is my brand on AI search?"</code></li>
+                <li><code>"Simulate a focus group for my product"</code></li>
+              </ul>
+              <p style="color:var(--text-dim);font-size:13px;margin-top:16px">Having trouble? Check the <a href="https://admin.apps.aidigitallabs.com">Admin Console</a> or contact your account manager.</p>
+            </div>
+            <div class="wizard-nav">
+              <button class="wizard-nav-btn prev" onclick="goToWizardStep(4)">&larr; Back</button>
+              <button class="wizard-nav-btn next" onclick="goToWizardStep(0)">Start Over</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2298,6 +2744,183 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
         }
       });
     });
+
+    // ===== MCP Setup Wizard =====
+    let wizardStep = 0;
+    let wizardOS = 'windows';
+    let wizardApiKey = '';
+
+    function initWizard() {
+      const keyInput = document.getElementById('wiz-api-key');
+      if (!keyInput) return;
+
+      // Restore saved key
+      const saved = localStorage.getItem('aidl_api_key');
+      if (saved && saved.startsWith('aidl_')) {
+        keyInput.value = saved;
+        validateWizardKey(saved);
+      }
+
+      keyInput.addEventListener('input', function() {
+        validateWizardKey(this.value.trim());
+      });
+
+      updateWizardConfig();
+    }
+
+    function validateWizardKey(key) {
+      const validation = document.getElementById('wiz-key-validation');
+      const nextBtn = document.getElementById('wiz-next-0');
+
+      if (!key) {
+        validation.textContent = '';
+        validation.className = 'wizard-validation';
+        nextBtn.disabled = true;
+        document.getElementById('wiz-api-key').className = '';
+        return;
+      }
+
+      if (!key.startsWith('aidl_')) {
+        validation.textContent = 'Key must start with aidl_';
+        validation.className = 'wizard-validation error';
+        nextBtn.disabled = true;
+        document.getElementById('wiz-api-key').className = 'invalid';
+        return;
+      }
+
+      if (key.length < 10) {
+        validation.textContent = 'Key appears too short';
+        validation.className = 'wizard-validation error';
+        nextBtn.disabled = true;
+        document.getElementById('wiz-api-key').className = 'invalid';
+        return;
+      }
+
+      validation.textContent = 'Valid key format';
+      validation.className = 'wizard-validation success';
+      nextBtn.disabled = false;
+      document.getElementById('wiz-api-key').className = 'valid';
+      wizardApiKey = key;
+      localStorage.setItem('aidl_api_key', key);
+    }
+
+    function setWizardOS(os) {
+      wizardOS = os;
+      const btns = document.querySelectorAll('#wiz-os-toggle .os-toggle-btn');
+      btns.forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === os));
+      updateWizardConfig();
+    }
+
+    function getWizardConfig() {
+      return JSON.stringify({
+        mcpServers: {
+          "aidigital-labs": {
+            command: "npx",
+            args: ["-y", "aidigital-labs-mcp"],
+            env: {
+              AIDIGITAL_API_KEY: wizardApiKey || 'aidl_your_key_here'
+            }
+          }
+        }
+      }, null, 2);
+    }
+
+    function updateWizardConfig() {
+      const config = getWizardConfig();
+      const configEl = document.getElementById('wiz-config-json');
+      if (configEl) {
+        // Syntax highlight the JSON
+        configEl.innerHTML = config
+          .replace(/"([^"]+)":/g, '<span class="hl-property">"$1"</span>:')
+          .replace(/: "([^"]+)"/g, ': <span class="hl-string">"$1"</span>');
+      }
+
+      // Update terminal commands
+      const winCmd = document.getElementById('wiz-cmd-windows');
+      const macCmd = document.getElementById('wiz-cmd-mac');
+
+      if (winCmd) {
+        const escaped = config.replace(/'/g, "''");
+        winCmd.textContent = `$config = @'\n${config}\n'@\n$dir = "$env:APPDATA\\Claude"\nif (!(Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force }\n$config | Set-Content "$dir\\claude_desktop_config.json" -Encoding UTF8\nWrite-Host "Done! Restart Claude Desktop."`;
+      }
+
+      if (macCmd) {
+        macCmd.textContent = `mkdir -p ~/Library/Application\\ Support/Claude\ncat > ~/Library/Application\\ Support/Claude/claude_desktop_config.json << 'EOF'\n${config}\nEOF\necho "Done! Restart Claude Desktop."`;
+      }
+
+      // Show/hide OS-specific elements
+      const showWin = wizardOS === 'windows';
+      const pathWin = document.getElementById('wiz-path-windows');
+      const pathMac = document.getElementById('wiz-path-mac');
+      const termWin = document.getElementById('wiz-terminal-windows');
+      const termMac = document.getElementById('wiz-terminal-mac');
+
+      if (pathWin) pathWin.style.display = showWin ? 'block' : 'none';
+      if (pathMac) pathMac.style.display = showWin ? 'none' : 'block';
+      if (termWin) termWin.style.display = showWin ? 'block' : 'none';
+      if (termMac) termMac.style.display = showWin ? 'none' : 'block';
+    }
+
+    function goToWizardStep(step) {
+      // Validate step 0 before proceeding
+      if (step > 0 && !wizardApiKey) {
+        const key = document.getElementById('wiz-api-key').value.trim();
+        if (!key || !key.startsWith('aidl_') || key.length < 10) {
+          goToWizardStep(0);
+          document.getElementById('wiz-api-key').focus();
+          return;
+        }
+        wizardApiKey = key;
+      }
+
+      wizardStep = step;
+
+      // Update panels
+      document.querySelectorAll('.wizard-panel').forEach((p, i) => {
+        p.classList.toggle('active', i === step);
+      });
+
+      // Update step indicators
+      document.querySelectorAll('.wizard-step-indicator').forEach((s, i) => {
+        s.classList.remove('active', 'completed');
+        if (i === step) s.classList.add('active');
+        else if (i < step) s.classList.add('completed');
+      });
+
+      // Refresh config when entering step 2+
+      if (step >= 2) updateWizardConfig();
+    }
+
+    function wizardCopyConfig() {
+      const config = getWizardConfig();
+      navigator.clipboard.writeText(config).then(() => {
+        const btn = document.getElementById('wiz-copy-config');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Config to Clipboard';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function wizardCopyTerminal(os) {
+      const el = document.getElementById('wiz-cmd-' + os);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const btn = el.closest('.code-block').querySelector('.code-copy');
+        if (btn) {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initWizard);
 
     // Active sidebar link tracking
     const sections = document.querySelectorAll('section[id], .hero');
