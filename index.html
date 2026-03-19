@@ -744,6 +744,315 @@
       display: block;
     }
 
+    /* ===== API Playground ===== */
+    .playground {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .playground__form,
+    .playground__output {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .playground__form label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      margin-top: 16px;
+    }
+
+    .playground__form label:first-child {
+      margin-top: 0;
+    }
+
+    .playground__form input,
+    .playground__form select,
+    .playground__form textarea {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    .playground__form input:focus,
+    .playground__form select:focus,
+    .playground__form textarea:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .playground__form input::placeholder,
+    .playground__form textarea::placeholder {
+      color: var(--text-dim);
+    }
+
+    .playground__form select {
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    .playground__form textarea {
+      min-height: 72px;
+      resize: vertical;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .playground__form select option {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    #pg-submit {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    #pg-submit:hover {
+      background: var(--accent-light);
+      box-shadow: 0 4px 20px var(--accent-glow-strong);
+    }
+
+    #pg-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .pg-status {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .pg-status--ready {
+      background: var(--surface-2);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+
+    .pg-status--running {
+      background: rgba(234, 179, 8, 0.08);
+      color: var(--yellow);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+    }
+
+    .pg-status--complete {
+      background: rgba(34, 197, 94, 0.08);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+
+    .pg-status--error {
+      background: rgba(239, 68, 68, 0.08);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    .pg-progress {
+      margin-bottom: 16px;
+    }
+
+    .pg-progress__bar {
+      height: 6px;
+      background: var(--surface-2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .pg-progress__fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .pg-progress__step {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .pg-result__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .pg-result__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0, 9, 220, 0.25);
+      color: var(--accent-light);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .pg-result__link:hover {
+      background: var(--accent-glow-strong);
+      text-decoration: none;
+    }
+
+    .pg-result__toggle {
+      padding: 6px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .pg-result__toggle:hover {
+      color: var(--text);
+      border-color: var(--border-light);
+    }
+
+    .pg-result__markdown {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      font-size: 14px;
+      line-height: 1.7;
+      max-height: 500px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-light) transparent;
+    }
+
+    .pg-result__markdown h1,
+    .pg-result__markdown h2,
+    .pg-result__markdown h3 {
+      color: white;
+      border: none;
+      padding: 0;
+      margin: 20px 0 8px;
+    }
+
+    .pg-result__markdown h1 { font-size: 20px; }
+    .pg-result__markdown h2 { font-size: 17px; margin-bottom: 10px; }
+    .pg-result__markdown h3 { font-size: 15px; margin: 16px 0 6px; }
+
+    .pg-result__markdown p {
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .pg-result__markdown ul,
+    .pg-result__markdown ol {
+      margin: 8px 0 12px 20px;
+    }
+
+    .pg-result__markdown code {
+      background: var(--surface-3);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 12.5px;
+    }
+
+    .pg-result__markdown pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+
+    .pg-result__markdown pre code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .pg-result__markdown strong {
+      color: white;
+    }
+
+    .pg-result__json {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      max-height: 500px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-light) transparent;
+    }
+
+    .pg-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: var(--text-dim);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .pg-field-row {
+      margin-bottom: 0;
+    }
+
+    .pg-field-row label span.required {
+      margin-left: 4px;
+    }
+
     /* ===== Footer ===== */
     .footer {
       margin-top: 64px;
@@ -809,6 +1118,10 @@
       .app-card-time {
         margin-left: 0;
       }
+
+      .playground {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 480px) {
@@ -857,6 +1170,7 @@
     <div class="sidebar-nav">
       <div class="sidebar-section">
         <a href="#getting-started" class="sidebar-link">Getting Started</a>
+        <a href="#playground" class="sidebar-link">API Playground</a>
         <a href="#authentication" class="sidebar-link">Authentication</a>
       </div>
 
@@ -933,6 +1247,56 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/status/<span class="hl-
 <span class="hl-comment"># Get result</span>
 curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-variable">JOB_ID</span> \
   -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span></code></pre>
+        </div>
+      </section>
+
+      <!-- API Playground -->
+      <section id="playground">
+        <h2>API Playground</h2>
+        <p>Test the API directly from your browser. No code needed &mdash; enter your key, pick a tool, fill in the parameters, and hit Submit.</p>
+
+        <div class="playground">
+          <div class="playground__form">
+            <label for="pg-key">API Key</label>
+            <input type="password" id="pg-key" placeholder="aidl_xxxxxxxxxxxx" autocomplete="off" />
+
+            <label for="pg-app">Tool</label>
+            <select id="pg-app">
+              <option value="website-audit">Website Audit</option>
+              <option value="neuromarketing">Neuromarketing Audit</option>
+              <option value="prompt-engineering">Prompt Engineering</option>
+              <option value="aio-optimization">AIO Optimization</option>
+              <option value="synthetic-focus-group">Synthetic Focus Group</option>
+            </select>
+
+            <div id="pg-fields">
+              <!-- Dynamic fields injected by JS -->
+            </div>
+
+            <label for="pg-instructions">Instructions <span class="optional">(optional)</span></label>
+            <textarea id="pg-instructions" placeholder="Focus on mobile conversion, emphasize accessibility..."></textarea>
+
+            <button id="pg-submit">Submit</button>
+          </div>
+
+          <div class="playground__output">
+            <div id="pg-status" class="pg-status pg-status--ready">Ready</div>
+            <div id="pg-progress" style="display:none" class="pg-progress">
+              <div class="pg-progress__bar"><div id="pg-bar" class="pg-progress__fill"></div></div>
+              <span id="pg-step" class="pg-progress__step">Waiting...</span>
+            </div>
+            <div id="pg-result" style="display:none">
+              <div class="pg-result__header">
+                <a id="pg-report-url" href="#" target="_blank" rel="noopener" class="pg-result__link">Open Visual Report &rarr;</a>
+                <button class="pg-result__toggle" onclick="toggleRawJson()">Toggle Raw JSON</button>
+              </div>
+              <div id="pg-markdown" class="pg-result__markdown"></div>
+              <pre id="pg-json" class="pg-result__json" style="display:none"></pre>
+            </div>
+            <div id="pg-empty" class="pg-empty">
+              Submit a request to see results here.
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1602,7 +1966,300 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <script>
+    // ===== API Playground =====
+    const APP_CONFIG = {
+      'website-audit': {
+        url: 'https://website-audit.apps.aidigitallabs.com',
+        fields: [
+          { name: 'website_url', label: 'Website URL', type: 'text', required: true, placeholder: 'https://example.com' },
+          { name: 'brand_name', label: 'Brand Name', type: 'text', placeholder: 'Example Corp (optional)' },
+        ]
+      },
+      'neuromarketing': {
+        url: 'https://neuromarketing-audit.apps.aidigitallabs.com',
+        fields: [
+          { name: 'asset_url', label: 'Creative Asset URL', type: 'text', required: true, placeholder: 'https://example.com/banner.jpg' },
+          { name: 'brand_name', label: 'Brand Name', type: 'text', required: true, placeholder: 'Coca-Cola' },
+          { name: 'asset_type', label: 'Asset Type', type: 'select', options: ['static_banner', 'landing_page', 'social_post', 'email'] },
+          { name: 'offer', label: 'Offer/CTA', type: 'text', placeholder: 'Sign up for a free trial' },
+        ]
+      },
+      'prompt-engineering': {
+        url: 'https://prompt-engineer.apps.aidigitallabs.com',
+        fields: [
+          { name: 'prompt_text', label: 'Prompt to Optimize', type: 'textarea', required: true, placeholder: 'You are an expert...' },
+          { name: 'model_target', label: 'Target Model', type: 'select', options: ['general', 'claude', 'gpt-4', 'gemini'] },
+          { name: 'use_case', label: 'Use Case', type: 'select', options: ['creative_writing', 'code_generation', 'data_analysis', 'summarization', 'extraction'] },
+        ]
+      },
+      'aio-optimization': {
+        url: 'https://aio-optimization.apps.aidigitallabs.com',
+        fields: [
+          { name: 'concept_name', label: 'Brand/Product Name', type: 'text', required: true, placeholder: 'Nike Air Max' },
+          { name: 'concept_type', label: 'Type', type: 'select', required: true, options: ['product', 'offering', 'concept'] },
+          { name: 'concept_category', label: 'Category', type: 'text', required: true, placeholder: 'Athletic Footwear' },
+          { name: 'query_count', label: 'Queries', type: 'number', placeholder: '10' },
+        ]
+      },
+      'synthetic-focus-group': {
+        url: 'https://synthetic-focus-group.apps.aidigitallabs.com',
+        fields: [
+          { name: 'brand_name', label: 'Brand Name', type: 'text', required: true, placeholder: 'AI Digital' },
+          { name: 'product_description', label: 'Product Description', type: 'textarea', required: true, placeholder: 'A B2B digital advertising platform...' },
+          { name: 'product_category', label: 'Category', type: 'text', placeholder: 'AdTech/SaaS' },
+          { name: 'campaign_objective', label: 'Campaign Objective', type: 'text', placeholder: 'Drive demo requests' },
+        ]
+      }
+    };
+
+    let pgPollTimer = null;
+
+    // Initialize playground
+    function initPlayground() {
+      const savedKey = localStorage.getItem('aidl_api_key');
+      if (savedKey) document.getElementById('pg-key').value = savedKey;
+
+      document.getElementById('pg-app').addEventListener('change', updatePlaygroundFields);
+      document.getElementById('pg-key').addEventListener('change', function() {
+        localStorage.setItem('aidl_api_key', this.value);
+      });
+      document.getElementById('pg-submit').addEventListener('click', submitPlayground);
+
+      updatePlaygroundFields();
+    }
+
+    function updatePlaygroundFields() {
+      const app = document.getElementById('pg-app').value;
+      const config = APP_CONFIG[app];
+      const container = document.getElementById('pg-fields');
+      container.innerHTML = '';
+
+      config.fields.forEach(field => {
+        const label = document.createElement('label');
+        label.setAttribute('for', 'pg-f-' + field.name);
+        label.innerHTML = field.label;
+        if (field.required) label.innerHTML += ' <span class="required">*</span>';
+        container.appendChild(label);
+
+        let el;
+        if (field.type === 'select') {
+          el = document.createElement('select');
+          field.options.forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt;
+            o.textContent = opt.replace(/_/g, ' ');
+            el.appendChild(o);
+          });
+        } else if (field.type === 'textarea') {
+          el = document.createElement('textarea');
+          el.placeholder = field.placeholder || '';
+          el.rows = 3;
+        } else {
+          el = document.createElement('input');
+          el.type = field.type || 'text';
+          el.placeholder = field.placeholder || '';
+        }
+        el.id = 'pg-f-' + field.name;
+        el.dataset.name = field.name;
+        el.dataset.required = field.required ? '1' : '';
+        container.appendChild(el);
+      });
+    }
+
+    function setStatus(type, text) {
+      const el = document.getElementById('pg-status');
+      el.className = 'pg-status pg-status--' + type;
+      el.textContent = text;
+    }
+
+    async function submitPlayground() {
+      const apiKey = document.getElementById('pg-key').value.trim();
+      if (!apiKey) {
+        setStatus('error', 'Please enter your API key');
+        return;
+      }
+      localStorage.setItem('aidl_api_key', apiKey);
+
+      const app = document.getElementById('pg-app').value;
+      const config = APP_CONFIG[app];
+
+      // Gather fields
+      const body = {};
+      const fields = document.querySelectorAll('#pg-fields input, #pg-fields select, #pg-fields textarea');
+      for (const f of fields) {
+        const val = f.value.trim();
+        if (f.dataset.required === '1' && !val) {
+          setStatus('error', 'Please fill in all required fields');
+          f.focus();
+          return;
+        }
+        if (val) {
+          body[f.dataset.name] = f.type === 'number' ? Number(val) : val;
+        }
+      }
+
+      const instructions = document.getElementById('pg-instructions').value.trim();
+      if (instructions) body.instructions = instructions;
+
+      // Reset output
+      document.getElementById('pg-result').style.display = 'none';
+      document.getElementById('pg-empty').style.display = 'none';
+      document.getElementById('pg-progress').style.display = 'block';
+      document.getElementById('pg-bar').style.width = '0%';
+      document.getElementById('pg-step').textContent = 'Submitting...';
+      setStatus('running', 'Submitting...');
+
+      const btn = document.getElementById('pg-submit');
+      btn.disabled = true;
+      btn.textContent = 'Running...';
+
+      try {
+        // Submit
+        const submitRes = await fetch(config.url + '/api/v1/submit', {
+          method: 'POST',
+          headers: {
+            'X-API-Key': apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (!submitRes.ok) {
+          const err = await submitRes.json().catch(() => ({ error: 'Request failed (' + submitRes.status + ')' }));
+          throw new Error(err.error || 'Submit failed: HTTP ' + submitRes.status);
+        }
+
+        const submitData = await submitRes.json();
+        const jobId = submitData.job_id;
+
+        setStatus('running', 'Processing...');
+        document.getElementById('pg-step').textContent = 'Job queued: ' + jobId.slice(0, 8) + '...';
+        document.getElementById('pg-bar').style.width = '10%';
+
+        // Start polling
+        pollStatus(config.url, jobId, apiKey);
+
+      } catch (err) {
+        setStatus('error', err.message);
+        document.getElementById('pg-progress').style.display = 'none';
+        document.getElementById('pg-empty').style.display = 'flex';
+        btn.disabled = false;
+        btn.textContent = 'Submit';
+      }
+    }
+
+    function pollStatus(baseUrl, jobId, apiKey) {
+      if (pgPollTimer) clearInterval(pgPollTimer);
+
+      pgPollTimer = setInterval(async () => {
+        try {
+          const res = await fetch(baseUrl + '/api/v1/status/' + jobId, {
+            headers: { 'X-API-Key': apiKey }
+          });
+
+          if (!res.ok) throw new Error('Status check failed: HTTP ' + res.status);
+
+          const data = await res.json();
+          const progress = data.progress || 0;
+
+          document.getElementById('pg-bar').style.width = Math.max(progress, 10) + '%';
+          document.getElementById('pg-step').textContent = data.current_step || data.status || 'Processing...';
+
+          if (data.status === 'complete') {
+            clearInterval(pgPollTimer);
+            pgPollTimer = null;
+            document.getElementById('pg-bar').style.width = '100%';
+            document.getElementById('pg-step').textContent = 'Complete!';
+            setStatus('complete', 'Complete');
+            fetchResult(baseUrl, jobId, apiKey);
+
+          } else if (data.status === 'error') {
+            clearInterval(pgPollTimer);
+            pgPollTimer = null;
+            setStatus('error', data.error || 'Job failed');
+            document.getElementById('pg-progress').style.display = 'none';
+            document.getElementById('pg-submit').disabled = false;
+            document.getElementById('pg-submit').textContent = 'Submit';
+          }
+
+        } catch (err) {
+          clearInterval(pgPollTimer);
+          pgPollTimer = null;
+          setStatus('error', err.message);
+          document.getElementById('pg-submit').disabled = false;
+          document.getElementById('pg-submit').textContent = 'Submit';
+        }
+      }, 5000);
+    }
+
+    async function fetchResult(baseUrl, jobId, apiKey) {
+      try {
+        const res = await fetch(baseUrl + '/api/v1/result/' + jobId, {
+          headers: { 'X-API-Key': apiKey }
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch result: HTTP ' + res.status);
+
+        const data = await res.json();
+        showResult(data);
+
+      } catch (err) {
+        setStatus('error', err.message);
+      } finally {
+        document.getElementById('pg-submit').disabled = false;
+        document.getElementById('pg-submit').textContent = 'Submit';
+      }
+    }
+
+    function showResult(data) {
+      document.getElementById('pg-progress').style.display = 'none';
+      document.getElementById('pg-empty').style.display = 'none';
+      document.getElementById('pg-result').style.display = 'block';
+
+      // Report URL
+      const urlEl = document.getElementById('pg-report-url');
+      if (data.report_url) {
+        urlEl.href = data.report_url;
+        urlEl.style.display = 'inline-flex';
+      } else {
+        urlEl.style.display = 'none';
+      }
+
+      // Markdown
+      const mdEl = document.getElementById('pg-markdown');
+      if (data.markdown_report && typeof marked !== 'undefined') {
+        mdEl.innerHTML = marked.parse(data.markdown_report);
+        mdEl.style.display = 'block';
+      } else if (data.markdown_report) {
+        mdEl.textContent = data.markdown_report;
+        mdEl.style.display = 'block';
+      } else {
+        mdEl.style.display = 'none';
+      }
+
+      // JSON
+      document.getElementById('pg-json').textContent = JSON.stringify(data, null, 2);
+      document.getElementById('pg-json').style.display = 'none';
+    }
+
+    function toggleRawJson() {
+      const md = document.getElementById('pg-markdown');
+      const json = document.getElementById('pg-json');
+      if (json.style.display === 'none') {
+        json.style.display = 'block';
+        md.style.display = 'none';
+      } else {
+        json.style.display = 'none';
+        md.style.display = 'block';
+      }
+    }
+
+    // Init playground on load
+    document.addEventListener('DOMContentLoaded', initPlayground);
+
     // Copy code to clipboard
     function copyCode(btn) {
       const pre = btn.closest('.code-block').querySelector('pre');
