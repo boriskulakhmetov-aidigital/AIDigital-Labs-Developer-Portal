@@ -2153,21 +2153,67 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
             </div>
           </div>
 
-          <!-- Step 4: File Path -->
+          <!-- Step 4: Open Config in Claude Desktop -->
           <div class="wizard-panel" id="wiz-step-3">
-            <h4>Where to save the downloaded file</h4>
-            <p>Move the downloaded <code>claude_desktop_config.json</code> to this folder:</p>
-            <div id="wiz-path-windows" class="wizard-path-box">
-              <div class="wizard-path-label">Windows</div>
-              <div class="wizard-path-value">%APPDATA%\Claude\claude_desktop_config.json</div>
-              <p style="font-size:12px;color:var(--text-dim);margin:8px 0 0">Typically: <code>C:\Users\YourName\AppData\Roaming\Claude\claude_desktop_config.json</code></p>
-              <p style="font-size:12px;color:var(--text-dim);margin:4px 0 0">To open the folder: press <code>Win+R</code>, type <code>%APPDATA%\Claude</code>, press Enter.</p>
+            <h4>Open the config file from Claude Desktop</h4>
+            <p style="margin-bottom:16px;">The easiest way — let Claude Desktop open the file for you:</p>
+
+            <div style="background:var(--surface-2);border-radius:12px;padding:20px;margin-bottom:16px;">
+              <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
+                <div style="background:var(--accent);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">1</div>
+                <div>
+                  <strong style="color:var(--text);">Open Claude Desktop</strong>
+                  <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">Launch the Claude app on your computer.</p>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
+                <div style="background:var(--accent);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">2</div>
+                <div>
+                  <strong style="color:var(--text);">Go to Settings</strong>
+                  <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">Click the <strong>☰ menu</strong> (top-left) → <strong>Settings</strong><br>Or use the keyboard shortcut: <code>Ctrl+,</code> (Windows) / <code>Cmd+,</code> (Mac)</p>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
+                <div style="background:var(--accent);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">3</div>
+                <div>
+                  <strong style="color:var(--text);">Navigate to Developer settings</strong>
+                  <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">Click <strong>General</strong> (left sidebar) → scroll down to <strong>Developer</strong> section</p>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
+                <div style="background:var(--accent);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">4</div>
+                <div>
+                  <strong style="color:var(--text);">Click "Edit Config"</strong>
+                  <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">This opens <code>claude_desktop_config.json</code> in your default text editor.</p>
+                </div>
+              </div>
+
+              <div style="display:flex;align-items:flex-start;gap:16px;">
+                <div style="background:#22c55e;color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;">5</div>
+                <div>
+                  <strong style="color:var(--text);">Replace the file contents</strong>
+                  <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">Select all (<code>Ctrl+A</code>), delete, then paste the config you copied/downloaded in the previous step. Save (<code>Ctrl+S</code>) and close.</p>
+                  <p style="font-size:13px;color:#f59e0b;margin-top:8px;">⚠️ If the file already has content (like <code>"preferences"</code>), make sure the <code>"mcpServers"</code> block is added INSIDE the same <code>{}</code> — not as a separate object.</p>
+                </div>
+              </div>
             </div>
-            <div id="wiz-path-mac" class="wizard-path-box" style="display:none">
-              <div class="wizard-path-label">Mac</div>
-              <div class="wizard-path-value">~/Library/Application Support/Claude/claude_desktop_config.json</div>
-              <p style="font-size:12px;color:var(--text-dim);margin:8px 0 0">To open in Finder: press <code>Cmd+Shift+G</code> and paste the path above.</p>
-            </div>
+
+            <details style="margin-top:12px;">
+              <summary style="cursor:pointer;color:var(--text-dim);font-size:13px;">Can't find "Edit Config"? Open the file manually →</summary>
+              <div style="margin-top:12px;">
+                <div id="wiz-path-windows" class="wizard-path-box">
+                  <div class="wizard-path-label">Windows</div>
+                  <p style="font-size:13px;color:var(--text-dim);margin:4px 0;">Press <code>Win+R</code>, type <code>%APPDATA%\Claude</code>, press Enter. Open <code>claude_desktop_config.json</code> in Notepad.</p>
+                </div>
+                <div id="wiz-path-mac" class="wizard-path-box" style="display:none">
+                  <div class="wizard-path-label">Mac</div>
+                  <p style="font-size:13px;color:var(--text-dim);margin:4px 0;">In Finder, press <code>Cmd+Shift+G</code> and paste: <code>~/Library/Application Support/Claude/</code></p>
+                </div>
+              </div>
+            </details>
             <div class="wizard-nav">
               <button class="wizard-nav-btn prev" onclick="goToWizardStep(2)">&larr; Back</button>
               <button class="wizard-nav-btn next" onclick="goToWizardStep(4)">Next &rarr;</button>
