@@ -1571,17 +1571,17 @@
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
           <pre><code><span class="hl-comment"># Submit a website audit</span>
-curl -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+curl -X POST https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{"website_url": "https://example.com"}'</span>
 
 <span class="hl-comment"># Check status (returns job_id)</span>
-curl https://website-audit.apps.aidigitallabs.com/api/v1/status/<span class="hl-variable">JOB_ID</span> \
+curl https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-status?job_id=<span class="hl-variable">JOB_ID</span> \
   -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span>
 
 <span class="hl-comment"># Get result</span>
-curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-variable">JOB_ID</span> \
+curl https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-result?job_id=<span class="hl-variable">JOB_ID</span> \
   -H <span class="hl-string">"X-API-Key: YOUR_KEY"</span></code></pre>
         </div>
       </section>
@@ -1669,21 +1669,21 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
           <div class="flow-step">
             <div class="flow-step-num">Step 1</div>
             <div class="flow-step-title">Submit</div>
-            <div class="flow-step-detail">POST /api/v1/submit</div>
+            <div class="flow-step-detail">POST /.netlify/functions/api-submit</div>
             <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns job_id</div>
           </div>
           <div class="flow-arrow">&rarr;</div>
           <div class="flow-step">
             <div class="flow-step-num">Step 2</div>
             <div class="flow-step-title">Poll</div>
-            <div class="flow-step-detail">GET /api/v1/status/{job_id}</div>
+            <div class="flow-step-detail">GET /.netlify/functions/api-status?job_id=</div>
             <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns status + progress</div>
           </div>
           <div class="flow-arrow">&rarr;</div>
           <div class="flow-step">
             <div class="flow-step-num">Step 3</div>
             <div class="flow-step-title">Result</div>
-            <div class="flow-step-detail">GET /api/v1/result/{job_id}</div>
+            <div class="flow-step-detail">GET /.netlify/functions/api-result?job_id=</div>
             <div class="flow-step-detail" style="color:var(--text-dim);margin-top:4px">Returns full report</div>
           </div>
         </div>
@@ -1708,7 +1708,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 
           <div class="endpoint endpoint-post">
             <span class="method method-post">POST</span>
-            <span class="endpoint-path">/api/v1/submit</span>
+            <span class="endpoint-path">/.netlify/functions/api-submit</span>
           </div>
 
           <div class="table-wrap">
@@ -1731,7 +1731,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
               <span class="code-lang">bash</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><code>curl -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+            <pre><code>curl -X POST https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{
@@ -1772,7 +1772,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 
           <div class="endpoint endpoint-post">
             <span class="method method-post">POST</span>
-            <span class="endpoint-path">/api/v1/submit</span>
+            <span class="endpoint-path">/.netlify/functions/api-submit</span>
           </div>
 
           <div class="table-wrap">
@@ -1795,7 +1795,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
               <span class="code-lang">bash</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><code>curl -X POST https://neuromarketing-audit.apps.aidigitallabs.com/api/v1/submit \
+            <pre><code>curl -X POST https://neuromarketing-audit.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{
@@ -1835,7 +1835,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 
           <div class="endpoint endpoint-post">
             <span class="method method-post">POST</span>
-            <span class="endpoint-path">/api/v1/submit</span>
+            <span class="endpoint-path">/.netlify/functions/api-submit</span>
           </div>
 
           <div class="table-wrap">
@@ -1857,7 +1857,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
               <span class="code-lang">bash</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><code>curl -X POST https://prompt-engineer.apps.aidigitallabs.com/api/v1/submit \
+            <pre><code>curl -X POST https://prompt-engineer.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{
@@ -1883,7 +1883,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 
           <div class="endpoint endpoint-post">
             <span class="method method-post">POST</span>
-            <span class="endpoint-path">/api/v1/submit</span>
+            <span class="endpoint-path">/.netlify/functions/api-submit</span>
           </div>
 
           <div class="table-wrap">
@@ -1906,7 +1906,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
               <span class="code-lang">bash</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><code>curl -X POST https://aio-optimization.apps.aidigitallabs.com/api/v1/submit \
+            <pre><code>curl -X POST https://aio-optimization.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{
@@ -1933,7 +1933,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
 
           <div class="endpoint endpoint-post">
             <span class="method method-post">POST</span>
-            <span class="endpoint-path">/api/v1/submit</span>
+            <span class="endpoint-path">/.netlify/functions/api-submit</span>
           </div>
 
           <div class="table-wrap">
@@ -1956,7 +1956,7 @@ curl https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-
               <span class="code-lang">bash</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><code>curl -X POST https://synthetic-focus-group.apps.aidigitallabs.com/api/v1/submit \
+            <pre><code>curl -X POST https://synthetic-focus-group.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{
@@ -2302,7 +2302,7 @@ BASE = <span class="hl-string">"https://website-audit.apps.aidigitallabs.com"</s
 
 <span class="hl-comment"># Submit</span>
 r = requests.<span class="hl-function">post</span>(
-    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/submit"</span>,
+    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/.netlify/functions/api-submit"</span>,
     headers={<span class="hl-string">"X-API-Key"</span>: API_KEY, <span class="hl-string">"Content-Type"</span>: <span class="hl-string">"application/json"</span>},
     json={
         <span class="hl-string">"website_url"</span>: <span class="hl-string">"https://example.com"</span>,
@@ -2315,7 +2315,7 @@ job_id = r.<span class="hl-function">json</span>()[<span class="hl-string">"job_
 <span class="hl-comment"># Poll until complete</span>
 <span class="hl-keyword">while</span> <span class="hl-number">True</span>:
     s = requests.<span class="hl-function">get</span>(
-        <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/status/<span class="hl-variable">{job_id}</span>"</span>,
+        <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/.netlify/functions/api-status?job_id=<span class="hl-variable">{job_id}</span>"</span>,
         headers={<span class="hl-string">"X-API-Key"</span>: API_KEY}
     ).<span class="hl-function">json</span>()
     <span class="hl-function">print</span>(<span class="hl-string">f"Status: <span class="hl-variable">{s['status']}</span>"</span>)
@@ -2327,7 +2327,7 @@ job_id = r.<span class="hl-function">json</span>()[<span class="hl-string">"job_
 
 <span class="hl-comment"># Get result</span>
 result = requests.<span class="hl-function">get</span>(
-    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/api/v1/result/<span class="hl-variable">{job_id}</span>"</span>,
+    <span class="hl-string">f"<span class="hl-variable">{BASE}</span>/.netlify/functions/api-result?job_id=<span class="hl-variable">{job_id}</span>"</span>,
     headers={<span class="hl-string">"X-API-Key"</span>: API_KEY}
 ).<span class="hl-function">json</span>()
 
@@ -2348,7 +2348,7 @@ result = requests.<span class="hl-function">get</span>(
 
 <span class="hl-keyword">async function</span> <span class="hl-function">runAudit</span>(url) {
   <span class="hl-comment">// Submit</span>
-  <span class="hl-keyword">const</span> { job_id } = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/submit`</span>, {
+  <span class="hl-keyword">const</span> { job_id } = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(<span class="hl-string">`<span class="hl-variable">${BASE}</span>/.netlify/functions/api-submit`</span>, {
     method: <span class="hl-string">'POST'</span>,
     headers: {
       <span class="hl-string">'X-API-Key'</span>: API_KEY,
@@ -2364,7 +2364,7 @@ result = requests.<span class="hl-function">get</span>(
   <span class="hl-keyword">do</span> {
     <span class="hl-keyword">await new</span> <span class="hl-function">Promise</span>(r => <span class="hl-function">setTimeout</span>(r, <span class="hl-number">5000</span>));
     status = <span class="hl-keyword">await</span> <span class="hl-function">fetch</span>(
-      <span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/status/<span class="hl-variable">${job_id}</span>`</span>,
+      <span class="hl-string">`<span class="hl-variable">${BASE}</span>/.netlify/functions/api-status?job_id=<span class="hl-variable">${job_id}</span>`</span>,
       { headers: { <span class="hl-string">'X-API-Key'</span>: API_KEY } }
     ).<span class="hl-function">then</span>(r => r.<span class="hl-function">json</span>());
     console.<span class="hl-function">log</span>(<span class="hl-string">`Status: <span class="hl-variable">${status.status}</span>`</span>);
@@ -2376,7 +2376,7 @@ result = requests.<span class="hl-function">get</span>(
 
   <span class="hl-comment">// Result</span>
   <span class="hl-keyword">return</span> <span class="hl-function">fetch</span>(
-    <span class="hl-string">`<span class="hl-variable">${BASE}</span>/api/v1/result/<span class="hl-variable">${job_id}</span>`</span>,
+    <span class="hl-string">`<span class="hl-variable">${BASE}</span>/.netlify/functions/api-result?job_id=<span class="hl-variable">${job_id}</span>`</span>,
     { headers: { <span class="hl-string">'X-API-Key'</span>: API_KEY } }
   ).<span class="hl-function">then</span>(r => r.<span class="hl-function">json</span>());
 }
@@ -2392,19 +2392,19 @@ result = requests.<span class="hl-function">get</span>(
                 <button class="code-copy" onclick="copyCode(this)">Copy</button>
               </div>
               <pre><code><span class="hl-comment"># Step 1: Submit</span>
-curl -s -X POST https://website-audit.apps.aidigitallabs.com/api/v1/submit \
+curl -s -X POST https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-submit \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span> \
   -H <span class="hl-string">"Content-Type: application/json"</span> \
   -d <span class="hl-string">'{"website_url": "https://example.com"}'</span>
 <span class="hl-comment"># → {"job_id": "abc-123-def"}</span>
 
 <span class="hl-comment"># Step 2: Poll status (repeat until "complete")</span>
-curl -s https://website-audit.apps.aidigitallabs.com/api/v1/status/<span class="hl-variable">abc-123-def</span> \
+curl -s "https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-status?job_id=<span class="hl-variable">abc-123-def</span>" \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span>
 <span class="hl-comment"># → {"status": "processing", "progress": 65}</span>
 
 <span class="hl-comment"># Step 3: Get result</span>
-curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="hl-variable">abc-123-def</span> \
+curl -s "https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-result?job_id=<span class="hl-variable">abc-123-def</span>" \
   -H <span class="hl-string">"X-API-Key: aidl_your_key_here"</span>
 <span class="hl-comment"># → {"job_id": "...", "status": "complete", "markdown_report": "...", ...}</span></code></pre>
             </div>
@@ -2621,7 +2621,7 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
 
       try {
         // Submit
-        const submitRes = await fetch(config.url + '/api/v1/submit', {
+        const submitRes = await fetch(config.url + '/.netlify/functions/api-submit', {
           method: 'POST',
           headers: {
             'X-API-Key': apiKey,
@@ -2659,7 +2659,7 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
 
       pgPollTimer = setInterval(async () => {
         try {
-          const res = await fetch(baseUrl + '/api/v1/status/' + jobId, {
+          const res = await fetch(baseUrl + '/.netlify/functions/api-status?job_id=' + encodeURIComponent(jobId), {
             headers: { 'X-API-Key': apiKey }
           });
 
@@ -2700,7 +2700,7 @@ curl -s https://website-audit.apps.aidigitallabs.com/api/v1/result/<span class="
 
     async function fetchResult(baseUrl, jobId, apiKey) {
       try {
-        const res = await fetch(baseUrl + '/api/v1/result/' + jobId, {
+        const res = await fetch(baseUrl + '/.netlify/functions/api-result?job_id=' + encodeURIComponent(jobId), {
           headers: { 'X-API-Key': apiKey }
         });
 
