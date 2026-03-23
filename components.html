@@ -524,6 +524,263 @@
 
     .no-results.hidden { display: none; }
 
+    /* ===== Visual Preview Boxes ===== */
+    .preview-box {
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .preview-box--col {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .preview-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* --- SVGRing preview --- */
+    .prev-ring { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+    .prev-ring svg { transform: rotate(-90deg); }
+    .prev-ring-label {
+      position: absolute; font-size: 18px; font-weight: 700; color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* --- ProgressBar preview --- */
+    .prev-progress-track {
+      width: 100%; max-width: 320px; height: 10px; border-radius: 6px;
+      background: var(--surface-2); overflow: hidden; position: relative;
+    }
+    .prev-progress-fill {
+      height: 100%; border-radius: 6px; background: var(--accent-light);
+      transition: width 0.6s ease;
+    }
+    .prev-progress-wrap { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 320px; }
+    .prev-progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
+
+    /* --- StepList preview --- */
+    .prev-steps { display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 280px; }
+    .prev-step {
+      display: flex; align-items: flex-start; gap: 12px; padding: 8px 0;
+      position: relative;
+    }
+    .prev-step:not(:last-child)::after {
+      content: ''; position: absolute; left: 13px; top: 32px;
+      width: 2px; height: calc(100% - 18px); background: var(--border);
+    }
+    .prev-step-dot {
+      width: 28px; height: 28px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; font-size: 13px;
+      flex-shrink: 0; font-weight: 600; border: 2px solid;
+    }
+    .prev-step-dot--done { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
+    .prev-step-dot--active { background: rgba(0,9,220,0.15); border-color: var(--accent-light); color: var(--accent-light); animation: pulse 2s infinite; }
+    .prev-step-dot--pending { background: var(--surface-2); border-color: var(--border); color: var(--text-dim); }
+    .prev-step-text { font-size: 14px; color: var(--text); padding-top: 3px; }
+    .prev-step-text--muted { color: var(--text-dim); }
+
+    /* --- Spinner preview --- */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .prev-spinner {
+      width: 32px; height: 32px; border: 3px solid var(--border);
+      border-top-color: var(--accent-light); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    /* --- Badge previews --- */
+    .prev-badge {
+      display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px;
+      border-radius: 12px; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.3px; border: 1px solid;
+    }
+    .prev-badge--green { background: rgba(34,197,94,0.12); color: #22c55e; border-color: rgba(34,197,94,0.25); }
+    .prev-badge--blue { background: rgba(59,130,246,0.12); color: #3b82f6; border-color: rgba(59,130,246,0.25); }
+    .prev-badge--yellow { background: rgba(234,179,8,0.12); color: #eab308; border-color: rgba(234,179,8,0.25); }
+    .prev-badge--red { background: rgba(239,68,68,0.12); color: #ef4444; border-color: rgba(239,68,68,0.25); }
+    .prev-badge--orange { background: rgba(249,115,22,0.12); color: #f97316; border-color: rgba(249,115,22,0.25); }
+
+    /* --- Dot previews --- */
+    .prev-dot {
+      width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+    }
+    .prev-dot--green { background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+    .prev-dot--amber { background: #f59e0b; box-shadow: 0 0 6px rgba(245,158,11,0.5); }
+    .prev-dot--red { background: #ef4444; box-shadow: 0 0 6px rgba(239,68,68,0.5); }
+    .prev-dot-label { font-size: 12px; color: var(--text-muted); margin-left: 4px; }
+    .prev-dot-group { display: inline-flex; align-items: center; gap: 4px; }
+
+    /* --- ScorePill preview --- */
+    .prev-score {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 50%;
+      font-size: 16px; font-weight: 700; border: 3px solid;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .prev-score--green { color: #22c55e; border-color: #22c55e; background: rgba(34,197,94,0.1); }
+    .prev-score--yellow { color: #eab308; border-color: #eab308; background: rgba(234,179,8,0.1); }
+    .prev-score--red { color: #ef4444; border-color: #ef4444; background: rgba(239,68,68,0.1); }
+
+    /* --- KpiTile preview --- */
+    .prev-kpi {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; min-width: 200px; text-align: left;
+    }
+    .prev-kpi-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .prev-kpi-value { font-size: 32px; font-weight: 700; color: white; font-family: 'JetBrains Mono', monospace; line-height: 1.1; }
+    .prev-kpi-trend { font-size: 13px; color: var(--green); margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+    .prev-kpi-sub { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+    /* --- ActionCard preview --- */
+    .prev-action {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px; width: 100%; max-width: 400px;
+    }
+    .prev-action-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .prev-action-title { font-size: 15px; font-weight: 600; color: white; }
+    .prev-action-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+    .prev-action-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-dim); }
+    .prev-action-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* --- SectionDivider preview --- */
+    .prev-divider {
+      width: 100%; display: flex; align-items: center; gap: 12px;
+    }
+    .prev-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .prev-divider-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-dim); white-space: nowrap;
+    }
+
+    /* --- PageHeader preview --- */
+    .prev-page-header { width: 100%; }
+    .prev-page-header h3 { font-size: 22px; font-weight: 700; color: white; margin: 0 0 6px; }
+    .prev-page-header p { font-size: 14px; color: var(--text-muted); margin: 0 0 10px; }
+    .prev-page-header-badges { display: flex; gap: 8px; }
+
+    /* --- MessageBubble preview --- */
+    .prev-chat-wrap { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 12px; }
+    .prev-bubble {
+      max-width: 80%; padding: 12px 16px; border-radius: 16px;
+      font-size: 14px; line-height: 1.5;
+    }
+    .prev-bubble--user {
+      align-self: flex-end; background: var(--accent); color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .prev-bubble--assistant {
+      align-self: flex-start; background: var(--surface-2); color: var(--text);
+      border: 1px solid var(--border); border-bottom-left-radius: 4px;
+    }
+
+    /* --- ChatPanel preview --- */
+    .prev-chatpanel {
+      width: 100%; max-width: 440px; border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; background: var(--bg);
+    }
+    .prev-chatpanel-messages { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+    .prev-chatpanel-input {
+      display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+      border-top: 1px solid var(--border); background: var(--surface);
+    }
+    .prev-chatpanel-input input {
+      flex: 1; background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 12px; color: var(--text); font-size: 13px;
+      font-family: 'Inter', sans-serif; outline: none;
+    }
+    .prev-chatpanel-input button {
+      background: var(--accent); color: white; border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* --- ValueEffortChart preview --- */
+    .prev-chart { position: relative; width: 280px; height: 280px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    .prev-chart-quad {
+      position: absolute; font-size: 9px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--text-dim); opacity: 0.6;
+    }
+    .prev-chart-quad--tl { top: 8px; left: 8px; }
+    .prev-chart-quad--tr { top: 8px; right: 8px; }
+    .prev-chart-quad--bl { bottom: 8px; left: 8px; }
+    .prev-chart-quad--br { bottom: 8px; right: 8px; }
+    .prev-chart-axis-x { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); }
+    .prev-chart-axis-y { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .prev-chart-dot {
+      position: absolute; width: 12px; height: 12px; border-radius: 50%;
+      transform: translate(-50%, -50%); border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    /* --- BrandMark preview --- */
+    .prev-brandmark { display: inline-flex; }
+
+    /* --- ThemeToggle preview --- */
+    .prev-toggle {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px; cursor: pointer;
+    }
+    .prev-toggle-icon { font-size: 18px; }
+    .prev-toggle-track {
+      width: 36px; height: 20px; border-radius: 10px;
+      background: var(--accent); position: relative;
+    }
+    .prev-toggle-thumb {
+      width: 16px; height: 16px; border-radius: 50%; background: white;
+      position: absolute; top: 2px; left: 18px; transition: left 0.2s;
+    }
+
+    /* --- Toolbar previews (Share, Download) --- */
+    .prev-toolbar {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 18px;
+    }
+    .prev-toolbar-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 14px; font-size: 13px;
+      font-weight: 500; color: var(--text-muted); cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+    .prev-toolbar-btn--accent {
+      background: var(--accent); border-color: var(--accent);
+      color: white; font-weight: 600;
+    }
+    .prev-toolbar-toast {
+      font-size: 12px; color: var(--green); display: flex;
+      align-items: center; gap: 4px;
+    }
+
+    /* --- ReportStatusCard preview --- */
+    .prev-report-status {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px; width: 100%; max-width: 360px;
+    }
+    .prev-report-status-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .prev-report-status-row:last-child { margin-bottom: 0; }
+    .prev-report-status-icon { font-size: 18px; }
+    .prev-report-status-text { font-size: 14px; color: var(--text); }
+    .prev-report-status-link { color: var(--accent-light); font-weight: 600; text-decoration: none; font-size: 14px; }
+    .prev-report-status-sub { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; }
@@ -667,6 +924,7 @@
         <button class="filter-btn" onclick="setFilter('theme', this)">Themes</button>
         <button class="filter-btn" onclick="setFilter('server', this)">Server</button>
         <button class="filter-btn" onclick="setFilter('type', this)">Types</button>
+        <button class="filter-btn" onclick="setFilter('visual', this)" style="border-color:rgba(139,92,246,0.3);color:#a78bfa;">&#9673; Visual</button>
       </div>
 
       <div id="no-results" class="no-results hidden">No exports match your search.</div>
@@ -828,7 +1086,7 @@
           <span class="category-count">6 components</span>
         </div>
 
-        <div class="export-card" data-type="component" data-search="brandmark brand mark logo quadrant">
+        <div class="export-card" data-type="component" data-visual="true" data-search="brandmark brand mark logo quadrant">
           <div class="export-card-header">
             <span class="export-name">BrandMark</span>
             <span class="export-entry">.</span>
@@ -851,6 +1109,23 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <div class="prev-brandmark">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+                <rect width="56" height="56" rx="8" fill="#0a0a0f"/>
+                <!-- Top-left: blue arrow -->
+                <polygon points="8,8 26,8 8,26" fill="#3344ff" opacity="0.9"/>
+                <!-- Top-right: green circle -->
+                <circle cx="39" cy="17" r="9" fill="#22c55e" opacity="0.9"/>
+                <!-- Bottom-left: pink X -->
+                <g transform="translate(17,39)" stroke="#ec4899" stroke-width="3" stroke-linecap="round" opacity="0.9">
+                  <line x1="-7" y1="-7" x2="7" y2="7"/><line x1="7" y1="-7" x2="-7" y2="7"/>
+                </g>
+                <!-- Bottom-right: blue square -->
+                <rect x="32" y="32" width="16" height="16" rx="2" fill="#3b82f6" opacity="0.9"/>
+              </svg>
+            </div>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { BrandMark } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -859,7 +1134,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="themetoggle theme toggle dark light mode switch">
+        <div class="export-card" data-type="component" data-visual="true" data-search="themetoggle theme toggle dark light mode switch">
           <div class="export-card-header">
             <span class="export-name">ThemeToggle</span>
             <span class="export-entry">.</span>
@@ -882,6 +1157,13 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <div class="prev-toggle">
+              <span class="prev-toggle-icon">&#9790;</span>
+              <div class="prev-toggle-track"><div class="prev-toggle-thumb"></div></div>
+              <span class="prev-toggle-icon">&#9728;</span>
+            </div>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ThemeToggle } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -890,7 +1172,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="statusbadge status badge tier trial active">
+        <div class="export-card" data-type="component" data-visual="true" data-search="statusbadge status badge tier trial active">
           <div class="export-card-header">
             <span class="export-name">StatusBadge</span>
             <span class="export-entry">.</span>
@@ -913,6 +1195,12 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <span class="prev-badge prev-badge--green">Active</span>
+            <span class="prev-badge prev-badge--blue">Trial</span>
+            <span class="prev-badge prev-badge--yellow">Pending</span>
+            <span class="prev-badge prev-badge--red">Blocked</span>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { StatusBadge } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -921,7 +1209,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="statusdot status dot indicator online offline">
+        <div class="export-card" data-type="component" data-visual="true" data-search="statusdot status dot indicator online offline">
           <div class="export-card-header">
             <span class="export-name">StatusDot</span>
             <span class="export-entry">.</span>
@@ -937,6 +1225,11 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <div class="prev-dot-group"><span class="prev-dot prev-dot--green"></span><span class="prev-dot-label">Online</span></div>
+            <div class="prev-dot-group"><span class="prev-dot prev-dot--amber"></span><span class="prev-dot-label">Warning</span></div>
+            <div class="prev-dot-group"><span class="prev-dot prev-dot--red"></span><span class="prev-dot-label">Error</span></div>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { StatusDot } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -945,7 +1238,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="spinner loading animation circle">
+        <div class="export-card" data-type="component" data-visual="true" data-search="spinner loading animation circle">
           <div class="export-card-header">
             <span class="export-name">Spinner</span>
             <span class="export-entry">.</span>
@@ -964,6 +1257,11 @@
                 <span class="used-by-tag">CON</span>
               </div>
             </div>
+          </div>
+          <div class="preview-box">
+            <div class="prev-spinner"></div>
+            <div class="prev-spinner" style="width:24px;height:24px;border-width:2.5px;"></div>
+            <div class="prev-spinner" style="width:16px;height:16px;border-width:2px;"></div>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1007,7 +1305,7 @@
           <span class="category-count">3 components</span>
         </div>
 
-        <div class="export-card" data-type="component" data-search="chatpanel chat panel message list streaming sse">
+        <div class="export-card" data-type="component" data-visual="true" data-search="chatpanel chat panel message list streaming sse">
           <div class="export-card-header">
             <span class="export-name">ChatPanel</span>
             <span class="export-entry">.</span>
@@ -1037,6 +1335,19 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <div class="prev-chatpanel">
+              <div class="prev-chatpanel-messages">
+                <div class="prev-bubble prev-bubble--user" style="font-size:13px;padding:10px 14px;">Audit acme-corp.com</div>
+                <div class="prev-bubble prev-bubble--assistant" style="font-size:13px;padding:10px 14px;">Starting your website audit now. I'll check SEO, performance, accessibility, and conversion factors.</div>
+                <div class="prev-bubble prev-bubble--assistant" style="font-size:13px;padding:10px 14px;opacity:0.7;">Analyzing page structure<span style="animation:pulse 1.5s infinite">...</span></div>
+              </div>
+              <div class="prev-chatpanel-input">
+                <input type="text" placeholder="Describe your website..." disabled>
+                <button disabled>Send</button>
+              </div>
+            </div>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ChatPanel } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -1050,7 +1361,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="messagebubble message bubble user assistant ai">
+        <div class="export-card" data-type="component" data-visual="true" data-search="messagebubble message bubble user assistant ai">
           <div class="export-card-header">
             <span class="export-name">MessageBubble</span>
             <span class="export-entry">.</span>
@@ -1068,6 +1379,12 @@
                 <span class="used-by-tag">SFG</span>
                 <span class="used-by-tag">CON</span>
               </div>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="prev-chat-wrap">
+              <div class="prev-bubble prev-bubble--user">Can you audit my website?</div>
+              <div class="prev-bubble prev-bubble--assistant">I'd be happy to help! Let me run a comprehensive website audit. Please share your URL and I'll analyze SEO, performance, and accessibility.</div>
             </div>
           </div>
           <div class="code-block">
@@ -1208,7 +1525,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="downloadbar download bar pdf markdown export">
+        <div class="export-card" data-type="component" data-visual="true" data-search="downloadbar download bar pdf markdown export">
           <div class="export-card-header">
             <span class="export-name">DownloadBar</span>
             <span class="export-entry">.</span>
@@ -1223,6 +1540,12 @@
                 <span class="used-by-tag">NM</span>
                 <span class="used-by-tag">SFG</span>
               </div>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="prev-toolbar">
+              <button class="prev-toolbar-btn">&#128196; Download PDF</button>
+              <button class="prev-toolbar-btn">&#128221; Download Markdown</button>
             </div>
           </div>
           <div class="code-block">
@@ -1254,7 +1577,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="connectedsharebar connected share bar supabase realtime">
+        <div class="export-card" data-type="component" data-visual="true" data-search="connectedsharebar connected share bar supabase realtime">
           <div class="export-card-header">
             <span class="export-name">ConnectedShareBar</span>
             <span class="export-entry">.</span>
@@ -1269,6 +1592,13 @@
                 <span class="used-by-tag">NM</span>
                 <span class="used-by-tag">SFG</span>
               </div>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="prev-toolbar">
+              <button class="prev-toolbar-btn prev-toolbar-btn--accent">&#128279; Share</button>
+              <button class="prev-toolbar-btn">&#128203; Copy Link</button>
+              <span class="prev-toolbar-toast">&#10003; Public link created</span>
             </div>
           </div>
           <div class="code-block">
@@ -1346,7 +1676,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="reportstatuscard report status card phase progress">
+        <div class="export-card" data-type="component" data-visual="true" data-search="reportstatuscard report status card phase progress">
           <div class="export-card-header">
             <span class="export-name">ReportStatusCard</span>
             <span class="export-entry">.</span>
@@ -1360,6 +1690,19 @@
                 <span class="used-by-tag">WA</span>
                 <span class="used-by-tag">NM</span>
                 <span class="used-by-tag">SFG</span>
+              </div>
+            </div>
+          </div>
+          <div class="preview-box">
+            <div class="prev-report-status">
+              <div class="prev-report-status-row">
+                <span class="prev-report-status-icon">&#10003;</span>
+                <span class="prev-report-status-text" style="color:var(--green);font-weight:600;">Report ready</span>
+                <a class="prev-report-status-link" href="#" onclick="return false">View Report &#8599;</a>
+              </div>
+              <div class="prev-report-status-row">
+                <div class="prev-spinner" style="width:16px;height:16px;border-width:2px;"></div>
+                <span class="prev-report-status-sub">Visual report generating<span style="animation:pulse 1.5s infinite">...</span></span>
               </div>
             </div>
           </div>
@@ -1402,7 +1745,7 @@
           <span class="category-count">11 components</span>
         </div>
 
-        <div class="export-card" data-type="component" data-search="scorepill score pill number rating circle">
+        <div class="export-card" data-type="component" data-visual="true" data-search="scorepill score pill number rating circle">
           <div class="export-card-header">
             <span class="export-name">ScorePill</span>
             <span class="export-entry">.</span>
@@ -1427,6 +1770,11 @@
               </div>
             </div>
           </div>
+          <div class="preview-box">
+            <span class="prev-score prev-score--green">8.5</span>
+            <span class="prev-score prev-score--yellow">5.2</span>
+            <span class="prev-score prev-score--red">2.1</span>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ScorePill } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -1435,7 +1783,7 @@
           </div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="severitybadge severity badge critical high medium low">
+        <div class="export-card" data-type="component" data-visual="true" data-search="severitybadge severity badge critical high medium low">
           <div class="export-card-header">
             <span class="export-name">SeverityBadge</span>
             <span class="export-entry">.</span>
@@ -1443,13 +1791,19 @@
           </div>
           <div class="export-desc">Badge displaying issue severity level (critical, high, medium, low).</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span></div></div></div>
+          <div class="preview-box">
+            <span class="prev-badge prev-badge--red">CRITICAL</span>
+            <span class="prev-badge prev-badge--orange">SIGNIFICANT</span>
+            <span class="prev-badge prev-badge--yellow">MODERATE</span>
+            <span class="prev-badge prev-badge--blue">IMPROVEMENT</span>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { SeverityBadge } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
 
 &lt;<span class="hl-function">SeverityBadge</span> <span class="hl-property">level</span>=<span class="hl-string">"high"</span> /&gt;</code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="prioritybadge priority badge p0 p1 p2 p3">
+        <div class="export-card" data-type="component" data-visual="true" data-search="prioritybadge priority badge p0 p1 p2 p3">
           <div class="export-card-header">
             <span class="export-name">PriorityBadge</span>
             <span class="export-entry">.</span>
@@ -1457,11 +1811,17 @@
           </div>
           <div class="export-desc">Badge displaying action item priority (P0 through P3).</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span></div></div></div>
+          <div class="preview-box">
+            <span class="prev-badge prev-badge--red">P0</span>
+            <span class="prev-badge prev-badge--orange">P1</span>
+            <span class="prev-badge prev-badge--yellow">P2</span>
+            <span class="prev-badge prev-badge--blue">P3</span>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { PriorityBadge } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="sectiondivider section divider separator hr">
+        <div class="export-card" data-type="component" data-visual="true" data-search="sectiondivider section divider separator hr">
           <div class="export-card-header">
             <span class="export-name">SectionDivider</span>
             <span class="export-entry">.</span>
@@ -1469,11 +1829,18 @@
           </div>
           <div class="export-desc">Visual divider between report sections with optional label.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-divider">
+              <div class="prev-divider-line"></div>
+              <span class="prev-divider-label">Key Findings</span>
+              <div class="prev-divider-line"></div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { SectionDivider } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="pageheader page header title subtitle">
+        <div class="export-card" data-type="component" data-visual="true" data-search="pageheader page header title subtitle">
           <div class="export-card-header">
             <span class="export-name">PageHeader</span>
             <span class="export-entry">.</span>
@@ -1481,6 +1848,16 @@
           </div>
           <div class="export-desc">Report page header with title, subtitle, and optional score display.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box preview-box--col">
+            <div class="prev-page-header">
+              <h3>Executive Summary</h3>
+              <p>Overview of key findings and recommendations for acme-corp.com</p>
+              <div class="prev-page-header-badges">
+                <span class="prev-badge prev-badge--green">Score: 7.4</span>
+                <span class="prev-badge prev-badge--blue">12 Findings</span>
+              </div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { PageHeader } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
@@ -1509,7 +1886,7 @@
             <pre><code><span class="hl-keyword">import</span> { CollapsibleRow } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="actioncard action card recommendation todo task">
+        <div class="export-card" data-type="component" data-visual="true" data-search="actioncard action card recommendation todo task">
           <div class="export-card-header">
             <span class="export-name">ActionCard</span>
             <span class="export-entry">.</span>
@@ -1517,11 +1894,24 @@
           </div>
           <div class="export-desc">Recommendation action card with priority, effort, and impact indicators.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-action">
+              <div class="prev-action-top">
+                <span class="prev-action-title">Optimize hero CTA contrast</span>
+                <span class="prev-badge prev-badge--red" style="font-size:11px;padding:2px 8px;">P0</span>
+              </div>
+              <div class="prev-action-desc">The primary call-to-action button has a contrast ratio of 2.8:1, well below the WCAG AA minimum of 4.5:1.</div>
+              <div class="prev-action-meta">
+                <span>&#128337; 0-30 days</span>
+                <span>&#9650; Impact: <strong style="color:var(--green)">High</strong></span>
+              </div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ActionCard } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="kpitile kpi tile metric number stat">
+        <div class="export-card" data-type="component" data-visual="true" data-search="kpitile kpi tile metric number stat">
           <div class="export-card-header">
             <span class="export-name">KpiTile</span>
             <span class="export-entry">.</span>
@@ -1529,6 +1919,14 @@
           </div>
           <div class="export-desc">Key performance indicator tile displaying a metric with label, value, and optional trend.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-kpi">
+              <div class="prev-kpi-title">AI Share of Voice</div>
+              <div class="prev-kpi-value">67%</div>
+              <div class="prev-kpi-trend">&#9650; +15%</div>
+              <div class="prev-kpi-sub">vs 52% last month</div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { KpiTile } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
@@ -1567,7 +1965,7 @@
           <span class="category-count">2 components</span>
         </div>
 
-        <div class="export-card" data-type="component" data-search="valueeffortchart value effort chart scatter plot quadrant">
+        <div class="export-card" data-type="component" data-visual="true" data-search="valueeffortchart value effort chart scatter plot quadrant">
           <div class="export-card-header">
             <span class="export-name">ValueEffortChart</span>
             <span class="export-entry">.</span>
@@ -1575,6 +1973,22 @@
           </div>
           <div class="export-desc">4-quadrant scatter chart plotting recommendations by value vs. effort. Helps prioritize actions.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-chart">
+              <div class="prev-chart-axis-x"></div>
+              <div class="prev-chart-axis-y"></div>
+              <span class="prev-chart-quad prev-chart-quad--tl">Quick Wins</span>
+              <span class="prev-chart-quad prev-chart-quad--tr">Strategic Bets</span>
+              <span class="prev-chart-quad prev-chart-quad--bl">Low Priority</span>
+              <span class="prev-chart-quad prev-chart-quad--br">Major Projects</span>
+              <div class="prev-chart-dot" style="top:25%;left:20%;background:#22c55e;" title="Fix CTA contrast"></div>
+              <div class="prev-chart-dot" style="top:15%;left:35%;background:#3b82f6;" title="Add schema markup"></div>
+              <div class="prev-chart-dot" style="top:30%;left:70%;background:#f97316;" title="Redesign navigation"></div>
+              <div class="prev-chart-dot" style="top:70%;left:25%;background:#6b7280;" title="Update footer links"></div>
+              <div class="prev-chart-dot" style="top:20%;left:80%;background:#8b5cf6;" title="Full rebrand"></div>
+              <div class="prev-chart-dot" style="top:60%;left:65%;background:#eab308;" title="CDN migration"></div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ValueEffortChart } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
@@ -1601,7 +2015,7 @@
           <span class="category-count">5 components</span>
         </div>
 
-        <div class="export-card" data-type="component" data-search="svgring svg ring circular progress donut">
+        <div class="export-card" data-type="component" data-visual="true" data-search="svgring svg ring circular progress donut">
           <div class="export-card-header">
             <span class="export-name">SVGRing</span>
             <span class="export-entry">.</span>
@@ -1618,13 +2032,25 @@
             </ul>
           </div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-ring">
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="var(--surface-2)" stroke-width="8"/>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="var(--accent-light)" stroke-width="8"
+                  stroke-dasharray="263.9" stroke-dashoffset="73.9" stroke-linecap="round">
+                  <animate attributeName="stroke-dashoffset" from="263.9" to="73.9" dur="1s" fill="freeze"/>
+                </circle>
+              </svg>
+              <span class="prev-ring-label">72%</span>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { SVGRing } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
 
 &lt;<span class="hl-function">SVGRing</span> <span class="hl-property">value</span>={<span class="hl-number">75</span>} <span class="hl-property">max</span>={<span class="hl-number">100</span>} <span class="hl-property">size</span>={<span class="hl-number">120</span>} /&gt;</code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="steplist step list steps progress checklist">
+        <div class="export-card" data-type="component" data-visual="true" data-search="steplist step list steps progress checklist">
           <div class="export-card-header">
             <span class="export-name">StepList</span>
             <span class="export-entry">.</span>
@@ -1632,11 +2058,19 @@
           </div>
           <div class="export-desc">Vertical step list showing multi-step process progress with completed/active/pending states.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">AIO</span><span class="used-by-tag">SFG</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-steps">
+              <div class="prev-step"><div class="prev-step-dot prev-step-dot--done">&#10003;</div><div class="prev-step-text">Analyzing website</div></div>
+              <div class="prev-step"><div class="prev-step-dot prev-step-dot--done">&#10003;</div><div class="prev-step-text">Running SEO audit</div></div>
+              <div class="prev-step"><div class="prev-step-dot prev-step-dot--active">3</div><div class="prev-step-text">Generating report</div></div>
+              <div class="prev-step"><div class="prev-step-dot prev-step-dot--pending">4</div><div class="prev-step-text prev-step-text--muted">Visualizing data</div></div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { StepList } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
 
-        <div class="export-card" data-type="component" data-search="progressbar progress bar horizontal fill">
+        <div class="export-card" data-type="component" data-visual="true" data-search="progressbar progress bar horizontal fill">
           <div class="export-card-header">
             <span class="export-name">ProgressBar</span>
             <span class="export-entry">.</span>
@@ -1644,6 +2078,12 @@
           </div>
           <div class="export-desc">Horizontal progress bar with animated fill and optional label.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">AIO</span><span class="used-by-tag">CON</span></div></div></div>
+          <div class="preview-box">
+            <div class="prev-progress-wrap">
+              <div class="prev-progress-meta"><span>Processing engines...</span><span>65%</span></div>
+              <div class="prev-progress-track"><div class="prev-progress-fill" style="width:65%"></div></div>
+            </div>
+          </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { ProgressBar } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
         </div>
@@ -2451,7 +2891,8 @@
       cards.forEach(card => {
         const type = card.getAttribute('data-type') || '';
         const searchText = (card.getAttribute('data-search') || '') + ' ' + card.textContent.toLowerCase();
-        const matchesFilter = activeFilter === 'all' || type === activeFilter;
+        const isVisual = card.getAttribute('data-visual') === 'true';
+        const matchesFilter = activeFilter === 'all' || (activeFilter === 'visual' ? isVisual : type === activeFilter);
         const matchesSearch = !query || searchText.includes(query);
         const visible = matchesFilter && matchesSearch;
 
