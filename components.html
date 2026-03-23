@@ -524,6 +524,142 @@
 
     .no-results.hidden { display: none; }
 
+    /* ===== DS Theme Variables (for real component previews) ===== */
+    :root {
+      --surface2: #1e1e2e;
+      --accent: #aef33e;
+      --brand-green: #aef33e;
+      --brand-blue: #0009e4;
+      --warning: #f6ad55;
+      --error: #f56565;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-full: 999px;
+      --radius-xs: 4px;
+      --transition-fast: 0.15s ease;
+      --transition-button: 0.2s ease;
+      --accent-dim: rgba(0,9,228,0.08);
+      --accent-border: rgba(0,9,228,0.2);
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-family: 'Inter', sans-serif;
+      --font-heading: 'Inter', sans-serif;
+      --glow-blue-soft: 0 0 12px rgba(0,9,228,0.08);
+      --success: #48bb78;
+    }
+
+    /* ===== DS Component CSS (extracted from components.css) ===== */
+    .aidl-theme-toggle {
+      background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--text-muted); cursor: pointer; padding: 5px 7px; display: inline-flex; align-items: center;
+      transition: var(--transition-fast);
+    }
+    .aidl-theme-toggle:hover { border-color: var(--brand-green); color: var(--brand-green); }
+
+    .aidl-status-badge {
+      display: inline-block; padding: 2px 7px; border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em;
+      background: var(--surface2); color: var(--text-muted);
+    }
+    .aidl-status-badge--active { background: rgba(174,243,62,0.12); color: var(--brand-green); }
+    .aidl-status-badge--trial  { background: rgba(246,173,85,0.12); color: var(--warning); }
+    .aidl-status-badge--pending { background: var(--surface2); color: var(--text-muted); }
+    .aidl-status-badge--blocked { background: rgba(245,101,101,0.12); color: var(--error); }
+    .aidl-status-badge--admin  { background: rgba(0,9,228,0.10); color: var(--brand-blue); }
+
+    .aidl-score-pill {
+      display: inline-flex; align-items: baseline; gap: 1px;
+      padding: 2px 8px; border-radius: var(--radius-full); font-size: 0.78rem; font-weight: 700;
+    }
+    .aidl-score-pill__max { font-size: 0.65rem; font-weight: 400; opacity: 0.6; }
+    .aidl-score-pill--good { background: rgba(174,243,62,0.15); color: var(--brand-green); }
+    .aidl-score-pill--mid { background: rgba(246,173,85,0.15); color: var(--warning); }
+    .aidl-score-pill--bad { background: rgba(245,101,101,0.15); color: var(--error); }
+
+    .aidl-sev-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .aidl-sev-badge--critical { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .aidl-sev-badge--significant { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .aidl-sev-badge--moderate { background: rgba(6,182,212,0.15); color: #06b6d4; }
+    .aidl-sev-badge--improvement { background: rgba(99,102,241,0.12); color: #6366f1; }
+
+    .aidl-priority-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .aidl-priority-badge--high { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .aidl-priority-badge--medium { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .aidl-priority-badge--low { background: rgba(163,163,163,0.15); color: #a3a3a3; }
+
+    .aidl-spinner {
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: aidl-spin 0.8s linear infinite;
+    }
+    @keyframes aidl-spin { to { transform: rotate(360deg); } }
+
+    .aidl-progress-bar { display: flex; align-items: center; gap: 10px; }
+    .aidl-progress-bar__track {
+      flex: 1; background: var(--surface2); border-radius: var(--radius-full); overflow: hidden;
+    }
+    .aidl-progress-bar__fill {
+      height: 100%; border-radius: var(--radius-full);
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .aidl-progress-bar__label { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+
+    .aidl-section-divider {
+      display: flex; align-items: center; gap: 12px; margin: 0;
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-muted);
+    }
+    .aidl-section-divider::before, .aidl-section-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .aidl-kpi-tile {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 16px; text-align: center;
+    }
+    .aidl-kpi-tile__value { font-size: 1.6rem; font-weight: 700; color: var(--text); }
+    .aidl-kpi-tile__suffix { font-size: 0.85rem; font-weight: 400; opacity: 0.6; }
+    .aidl-kpi-tile__label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+    .aidl-kpi-tile__desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+
+    .aidl-action-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+      padding: 16px; transition: box-shadow var(--transition-fast); width: 100%; max-width: 400px;
+    }
+    .aidl-action-card:hover { box-shadow: var(--glow-blue-soft); }
+    .aidl-action-card__header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .aidl-action-card__title { flex: 1; font-size: 0.95rem; font-weight: 600; margin: 0; color: var(--text); }
+    .aidl-action-card__score { flex-shrink: 0; }
+    .aidl-action-card__desc { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 8px; line-height: 1.5; }
+    .aidl-action-card__meta { font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .aidl-page-header { margin-bottom: 0; }
+    .aidl-page-header__title { font-size: 1.4rem; font-weight: 700; margin: 0 0 6px; color: var(--text); }
+    .aidl-page-header__subtitle { font-size: 0.92rem; color: var(--text-muted); margin: 0 0 12px; }
+    .aidl-page-header__meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0; display: flex; gap: 8px; }
+
+    .aidl-status-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      background: var(--text-muted);
+    }
+    .aidl-status-dot--chatting  { background: var(--brand-green); animation: aidl-pulse 2s infinite; }
+    .aidl-status-dot--done      { background: var(--brand-green); }
+    .aidl-status-dot--error     { background: var(--error); }
+    .aidl-status-dot--pending   { background: var(--warning); animation: aidl-pulse 1.2s infinite; }
+    @keyframes aidl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .aidl-step-list { display: flex; flex-direction: column; gap: 12px; }
+    .aidl-step-list__item { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; }
+    .aidl-step-list__icon { width: 20px; text-align: center; font-size: 0.85rem; }
+    .aidl-step-list__item--done { color: var(--success); }
+    .aidl-step-list__item--done .aidl-step-list__icon { color: var(--success); }
+    .aidl-step-list__item--active { color: var(--accent); animation: aidl-pulse 1.5s ease-in-out infinite; }
+    .aidl-step-list__item--pending { color: var(--text-muted); opacity: 0.5; }
+
     /* ===== Visual Preview Boxes ===== */
     .preview-box {
       background: var(--bg);
@@ -1158,11 +1294,12 @@
             </div>
           </div>
           <div class="preview-box">
-            <div class="prev-toggle">
-              <span class="prev-toggle-icon">&#9790;</span>
-              <div class="prev-toggle-track"><div class="prev-toggle-thumb"></div></div>
-              <span class="prev-toggle-icon">&#9728;</span>
-            </div>
+            <button class="aidl-theme-toggle" style="pointer-events:none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="aidl-theme-toggle" style="pointer-events:none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </button>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1196,10 +1333,11 @@
             </div>
           </div>
           <div class="preview-box">
-            <span class="prev-badge prev-badge--green">Active</span>
-            <span class="prev-badge prev-badge--blue">Trial</span>
-            <span class="prev-badge prev-badge--yellow">Pending</span>
-            <span class="prev-badge prev-badge--red">Blocked</span>
+            <span class="aidl-status-badge aidl-status-badge--active">Active</span>
+            <span class="aidl-status-badge aidl-status-badge--trial">Trial</span>
+            <span class="aidl-status-badge aidl-status-badge--pending">Pending</span>
+            <span class="aidl-status-badge aidl-status-badge--blocked">Blocked</span>
+            <span class="aidl-status-badge aidl-status-badge--admin">Admin</span>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1226,9 +1364,10 @@
             </div>
           </div>
           <div class="preview-box">
-            <div class="prev-dot-group"><span class="prev-dot prev-dot--green"></span><span class="prev-dot-label">Online</span></div>
-            <div class="prev-dot-group"><span class="prev-dot prev-dot--amber"></span><span class="prev-dot-label">Warning</span></div>
-            <div class="prev-dot-group"><span class="prev-dot prev-dot--red"></span><span class="prev-dot-label">Error</span></div>
+            <div style="display:inline-flex;align-items:center;gap:6px"><span class="aidl-status-dot aidl-status-dot--chatting"></span><span style="font-size:0.82rem;color:var(--text-muted)">Chatting</span></div>
+            <div style="display:inline-flex;align-items:center;gap:6px"><span class="aidl-status-dot aidl-status-dot--pending"></span><span style="font-size:0.82rem;color:var(--text-muted)">Pending</span></div>
+            <div style="display:inline-flex;align-items:center;gap:6px"><span class="aidl-status-dot aidl-status-dot--done"></span><span style="font-size:0.82rem;color:var(--text-muted)">Done</span></div>
+            <div style="display:inline-flex;align-items:center;gap:6px"><span class="aidl-status-dot aidl-status-dot--error"></span><span style="font-size:0.82rem;color:var(--text-muted)">Error</span></div>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1259,9 +1398,9 @@
             </div>
           </div>
           <div class="preview-box">
-            <div class="prev-spinner"></div>
-            <div class="prev-spinner" style="width:24px;height:24px;border-width:2.5px;"></div>
-            <div class="prev-spinner" style="width:16px;height:16px;border-width:2px;"></div>
+            <div class="aidl-spinner" style="width:32px;height:32px;"></div>
+            <div class="aidl-spinner" style="width:24px;height:24px;border-width:2.5px;"></div>
+            <div class="aidl-spinner" style="width:16px;height:16px;border-width:2px;"></div>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1771,9 +1910,9 @@
             </div>
           </div>
           <div class="preview-box">
-            <span class="prev-score prev-score--green">8.5</span>
-            <span class="prev-score prev-score--yellow">5.2</span>
-            <span class="prev-score prev-score--red">2.1</span>
+            <span class="aidl-score-pill aidl-score-pill--good">8.5<span class="aidl-score-pill__max">/10</span></span>
+            <span class="aidl-score-pill aidl-score-pill--mid">5.2<span class="aidl-score-pill__max">/10</span></span>
+            <span class="aidl-score-pill aidl-score-pill--bad">2.1<span class="aidl-score-pill__max">/10</span></span>
           </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -1792,10 +1931,10 @@
           <div class="export-desc">Badge displaying issue severity level (critical, high, medium, low).</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span></div></div></div>
           <div class="preview-box">
-            <span class="prev-badge prev-badge--red">CRITICAL</span>
-            <span class="prev-badge prev-badge--orange">SIGNIFICANT</span>
-            <span class="prev-badge prev-badge--yellow">MODERATE</span>
-            <span class="prev-badge prev-badge--blue">IMPROVEMENT</span>
+            <span class="aidl-sev-badge aidl-sev-badge--critical">Critical</span>
+            <span class="aidl-sev-badge aidl-sev-badge--significant">Significant</span>
+            <span class="aidl-sev-badge aidl-sev-badge--moderate">Moderate</span>
+            <span class="aidl-sev-badge aidl-sev-badge--improvement">Improvement</span>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { SeverityBadge } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span>
@@ -1812,10 +1951,9 @@
           <div class="export-desc">Badge displaying action item priority (P0 through P3).</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span></div></div></div>
           <div class="preview-box">
-            <span class="prev-badge prev-badge--red">P0</span>
-            <span class="prev-badge prev-badge--orange">P1</span>
-            <span class="prev-badge prev-badge--yellow">P2</span>
-            <span class="prev-badge prev-badge--blue">P3</span>
+            <span class="aidl-priority-badge aidl-priority-badge--high">High</span>
+            <span class="aidl-priority-badge aidl-priority-badge--medium">Medium</span>
+            <span class="aidl-priority-badge aidl-priority-badge--low">Low</span>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { PriorityBadge } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
@@ -1829,12 +1967,8 @@
           </div>
           <div class="export-desc">Visual divider between report sections with optional label.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
-          <div class="preview-box">
-            <div class="prev-divider">
-              <div class="prev-divider-line"></div>
-              <span class="prev-divider-label">Key Findings</span>
-              <div class="prev-divider-line"></div>
-            </div>
+          <div class="preview-box" style="width:100%">
+            <div class="aidl-section-divider" style="width:100%">Key Findings</div>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><code><span class="hl-keyword">import</span> { SectionDivider } <span class="hl-keyword">from</span> <span class="hl-string">'@boriskulakhmetov-aidigital/design-system'</span></code></pre></div>
@@ -1849,12 +1983,12 @@
           <div class="export-desc">Report page header with title, subtitle, and optional score display.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
           <div class="preview-box preview-box--col">
-            <div class="prev-page-header">
-              <h3>Executive Summary</h3>
-              <p>Overview of key findings and recommendations for acme-corp.com</p>
-              <div class="prev-page-header-badges">
-                <span class="prev-badge prev-badge--green">Score: 7.4</span>
-                <span class="prev-badge prev-badge--blue">12 Findings</span>
+            <div class="aidl-page-header">
+              <div class="aidl-page-header__title">Executive Summary</div>
+              <div class="aidl-page-header__subtitle">Overview of key findings and recommendations for acme-corp.com</div>
+              <div class="aidl-page-header__meta">
+                <span class="aidl-score-pill aidl-score-pill--good">7.4<span class="aidl-score-pill__max">/10</span></span>
+                <span class="aidl-status-badge aidl-status-badge--active">12 Findings</span>
               </div>
             </div>
           </div>
@@ -1895,15 +2029,15 @@
           <div class="export-desc">Recommendation action card with priority, effort, and impact indicators.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
           <div class="preview-box">
-            <div class="prev-action">
-              <div class="prev-action-top">
-                <span class="prev-action-title">Optimize hero CTA contrast</span>
-                <span class="prev-badge prev-badge--red" style="font-size:11px;padding:2px 8px;">P0</span>
+            <div class="aidl-action-card">
+              <div class="aidl-action-card__header">
+                <div class="aidl-action-card__title">Optimize hero CTA contrast</div>
+                <div class="aidl-action-card__score"><span class="aidl-priority-badge aidl-priority-badge--high">High</span></div>
               </div>
-              <div class="prev-action-desc">The primary call-to-action button has a contrast ratio of 2.8:1, well below the WCAG AA minimum of 4.5:1.</div>
-              <div class="prev-action-meta">
-                <span>&#128337; 0-30 days</span>
-                <span>&#9650; Impact: <strong style="color:var(--green)">High</strong></span>
+              <div class="aidl-action-card__desc">The primary call-to-action button has a contrast ratio of 2.8:1, well below the WCAG AA minimum of 4.5:1.</div>
+              <div class="aidl-action-card__meta">
+                <span>0-30 days</span>
+                <span><span class="aidl-sev-badge aidl-sev-badge--critical">Critical</span></span>
               </div>
             </div>
           </div>
@@ -1920,11 +2054,10 @@
           <div class="export-desc">Key performance indicator tile displaying a metric with label, value, and optional trend.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">SFG</span></div></div></div>
           <div class="preview-box">
-            <div class="prev-kpi">
-              <div class="prev-kpi-title">AI Share of Voice</div>
-              <div class="prev-kpi-value">67%</div>
-              <div class="prev-kpi-trend">&#9650; +15%</div>
-              <div class="prev-kpi-sub">vs 52% last month</div>
+            <div class="aidl-kpi-tile">
+              <div class="aidl-kpi-tile__value">67<span class="aidl-kpi-tile__suffix">%</span></div>
+              <div class="aidl-kpi-tile__label">AI Share of Voice</div>
+              <div class="aidl-kpi-tile__desc">vs 52% last month</div>
             </div>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -2059,11 +2192,11 @@
           <div class="export-desc">Vertical step list showing multi-step process progress with completed/active/pending states.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">WA</span><span class="used-by-tag">NM</span><span class="used-by-tag">AIO</span><span class="used-by-tag">SFG</span></div></div></div>
           <div class="preview-box">
-            <div class="prev-steps">
-              <div class="prev-step"><div class="prev-step-dot prev-step-dot--done">&#10003;</div><div class="prev-step-text">Analyzing website</div></div>
-              <div class="prev-step"><div class="prev-step-dot prev-step-dot--done">&#10003;</div><div class="prev-step-text">Running SEO audit</div></div>
-              <div class="prev-step"><div class="prev-step-dot prev-step-dot--active">3</div><div class="prev-step-text">Generating report</div></div>
-              <div class="prev-step"><div class="prev-step-dot prev-step-dot--pending">4</div><div class="prev-step-text prev-step-text--muted">Visualizing data</div></div>
+            <div class="aidl-step-list">
+              <div class="aidl-step-list__item aidl-step-list__item--done"><span class="aidl-step-list__icon">&#10003;</span>Analyzing website</div>
+              <div class="aidl-step-list__item aidl-step-list__item--done"><span class="aidl-step-list__icon">&#10003;</span>Running SEO audit</div>
+              <div class="aidl-step-list__item aidl-step-list__item--active"><span class="aidl-step-list__icon">&#9679;</span>Generating report</div>
+              <div class="aidl-step-list__item aidl-step-list__item--pending"><span class="aidl-step-list__icon">&#9675;</span>Visualizing data</div>
             </div>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -2078,10 +2211,12 @@
           </div>
           <div class="export-desc">Horizontal progress bar with animated fill and optional label.</div>
           <div class="export-meta"><div class="export-meta-item"><span class="export-meta-label">Used by:</span><div class="used-by-tags"><span class="used-by-tag">AIO</span><span class="used-by-tag">CON</span></div></div></div>
-          <div class="preview-box">
-            <div class="prev-progress-wrap">
-              <div class="prev-progress-meta"><span>Processing engines...</span><span>65%</span></div>
-              <div class="prev-progress-track"><div class="prev-progress-fill" style="width:65%"></div></div>
+          <div class="preview-box" style="width:100%">
+            <div class="aidl-progress-bar" style="width:100%;max-width:360px">
+              <div class="aidl-progress-bar__track" style="height:8px">
+                <div class="aidl-progress-bar__fill" style="width:65%;background:var(--brand-green)"></div>
+              </div>
+              <span class="aidl-progress-bar__label">65%</span>
             </div>
           </div>
           <div class="code-block"><div class="code-header"><span class="code-lang">TSX</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
