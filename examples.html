@@ -4,66 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MCP Usage Examples — AI Digital Labs</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #0a0a0a; color: #d0d0d0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.7; padding: 60px 24px;
-    }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { color: #0009DC; font-size: 2rem; margin-bottom: 8px; }
-    .subtitle { color: #666; font-size: 1rem; margin-bottom: 40px; }
-    h2 { color: #e0e0e0; font-size: 1.3rem; margin: 40px 0 16px; }
-    .back { display: inline-block; margin-bottom: 32px; color: #666; text-decoration: none; font-size: 0.9rem; }
-    .back:hover { color: #999; }
-    a { color: #7b8cff; }
-
-    /* Chat simulation */
-    .chat { margin: 16px 0 32px; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; }
-    .chat-header {
-      background: #111; padding: 12px 16px; font-size: 0.8rem; color: #666;
-      border-bottom: 1px solid #1a1a1a; display: flex; align-items: center; gap: 8px;
-    }
-    .chat-header .dot { width: 8px; height: 8px; border-radius: 50%; background: #0009DC; }
-    .chat-body { padding: 20px; }
-    .msg { margin-bottom: 16px; max-width: 85%; }
-    .msg:last-child { margin-bottom: 0; }
-    .msg.user { margin-left: auto; }
-    .msg.assistant { margin-right: auto; }
-    .msg-label { font-size: 0.7rem; color: #555; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-    .msg.user .msg-label { text-align: right; }
-    .msg-bubble {
-      padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5;
-    }
-    .msg.user .msg-bubble { background: #0009DC22; color: #c0c8ff; border-bottom-right-radius: 4px; }
-    .msg.assistant .msg-bubble { background: #151515; color: #ccc; border-bottom-left-radius: 4px; }
-    .tool-call {
-      background: #0a1a0a; border: 1px solid #1a3a1a; border-radius: 8px;
-      padding: 10px 14px; margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
-    }
-    .tool-call .tool-name { color: #4ade80; font-weight: 600; }
-    .tool-call .tool-param { color: #888; }
-    .tool-call .tool-value { color: #7b8cff; }
-    .tool-result {
-      background: #0a0a1a; border: 1px solid #1a1a3a; border-radius: 8px;
-      padding: 10px 14px; margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #999;
-    }
-    .report-link {
-      display: inline-block; background: #0009DC; color: #fff; padding: 8px 16px;
-      border-radius: 8px; text-decoration: none; font-size: 0.85rem; margin-top: 8px;
-    }
-    .report-link:hover { background: #0007b3; }
-    .badge {
-      display: inline-block; background: #0009DC22; color: #7b8cff;
-      padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;
-    }
-    .example-context {
-      background: #111; border: 1px solid #1a1a1a; border-radius: 8px;
-      padding: 14px 16px; margin-bottom: 16px; font-size: 0.85rem; color: #888;
-    }
-    .example-context strong { color: #bbb; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
@@ -323,5 +264,22 @@
       </p>
     </div>
   </div>
+<script>
+// Theme toggle with localStorage persistence
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : (current === 'dark' ? 'light' :
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light'));
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('dev-portal-theme', next);
+}
+// Apply saved theme on load
+(function() {
+  const saved = localStorage.getItem('dev-portal-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+</script>
+
 </body>
 </html>
