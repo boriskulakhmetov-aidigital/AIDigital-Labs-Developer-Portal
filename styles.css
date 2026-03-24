@@ -2,24 +2,28 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #111111;
+  /* Aligned with AI Labs DS theme (ai-labs.ts dark) */
+  --bg: #080808;
+  --surface: #0f0f0f;
   --surface-2: #1a1a1a;
   --surface-3: #222222;
-  --border: #2a2a2a;
-  --border-light: #333333;
-  --text: #e0e0e0;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --text: #ffffff;
   --text-muted: #888888;
   --text-dim: #666666;
-  --accent: #0009DC;
-  --accent-light: #3344ff;
-  --accent-glow: rgba(0, 9, 220, 0.15);
-  --accent-glow-strong: rgba(0, 9, 220, 0.3);
-  --code-bg: #0d0d0d;
-  --code-border: #1e1e1e;
-  --green: #22c55e;
-  --yellow: #eab308;
-  --red: #ef4444;
+  --accent: #aef33e;
+  --accent-light: #c5f76e;
+  --accent-hover: #95d932;
+  --accent-glow: rgba(174, 243, 62, 0.08);
+  --accent-glow-strong: rgba(174, 243, 62, 0.25);
+  --accent-border: rgba(174, 243, 62, 0.2);
+  --blue: #0009e4;
+  --code-bg: #0a0a0a;
+  --code-border: rgba(255, 255, 255, 0.06);
+  --green: #48bb78;
+  --yellow: #f6ad55;
+  --red: #f56565;
   --orange: #f97316;
   --sidebar-w: 280px;
   --header-h: 0px;
@@ -27,43 +31,49 @@
   --radius-lg: 12px;
 }
 
-/* ===== Light Theme ===== */
+/* ===== Light Theme (aligned with AI Labs DS light) ===== */
 [data-theme="light"] {
-  --bg: #f8f9fa;
+  --bg: #f1f1f1;
   --surface: #ffffff;
-  --surface-2: #f0f1f3;
-  --surface-3: #e8e9eb;
-  --border: #d8dae0;
-  --border-light: #e2e4e8;
-  --text: #1a1a2e;
-  --text-muted: #6b7280;
-  --text-dim: #9ca3af;
-  --accent: #0009DC;
-  --accent-light: #3344ff;
-  --accent-glow: rgba(0, 9, 220, 0.08);
-  --accent-glow-strong: rgba(0, 9, 220, 0.15);
-  --code-bg: #f3f4f6;
-  --code-border: #e5e7eb;
+  --surface-2: #e8e8e8;
+  --surface-3: #dcdcdc;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.06);
+  --text: #080808;
+  --text-muted: #666666;
+  --text-dim: #999999;
+  --accent: #0009e4;
+  --accent-light: #2233ff;
+  --accent-hover: #0007b5;
+  --accent-glow: rgba(0, 9, 228, 0.06);
+  --accent-glow-strong: rgba(0, 9, 228, 0.15);
+  --accent-border: rgba(0, 9, 228, 0.2);
+  --blue: #0009e4;
+  --code-bg: #f5f5f5;
+  --code-border: rgba(0, 0, 0, 0.08);
 }
 
 /* ===== Auto-detect system preference ===== */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #f8f9fa;
+    --bg: #f1f1f1;
     --surface: #ffffff;
-    --surface-2: #f0f1f3;
-    --surface-3: #e8e9eb;
-    --border: #d8dae0;
-    --border-light: #e2e4e8;
-    --text: #1a1a2e;
-    --text-muted: #6b7280;
-    --text-dim: #9ca3af;
-    --accent: #0009DC;
-    --accent-light: #3344ff;
-    --accent-glow: rgba(0, 9, 220, 0.08);
-    --accent-glow-strong: rgba(0, 9, 220, 0.15);
-    --code-bg: #f3f4f6;
-    --code-border: #e5e7eb;
+    --surface-2: #e8e8e8;
+    --surface-3: #dcdcdc;
+    --border: rgba(0, 0, 0, 0.1);
+    --border-light: rgba(0, 0, 0, 0.06);
+    --text: #080808;
+    --text-muted: #666666;
+    --text-dim: #999999;
+    --accent: #0009e4;
+    --accent-light: #2233ff;
+    --accent-hover: #0007b5;
+    --accent-glow: rgba(0, 9, 228, 0.06);
+    --accent-glow-strong: rgba(0, 9, 228, 0.15);
+    --accent-border: rgba(0, 9, 228, 0.2);
+    --blue: #0009e4;
+    --code-bg: #f5f5f5;
+    --code-border: rgba(0, 0, 0, 0.08);
   }
   :root:not([data-theme="dark"]) .theme-toggle .icon-sun { display: none; }
   :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: inline; }
@@ -75,10 +85,10 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.6;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -291,7 +301,7 @@ body {
   letter-spacing: 1px;
   color: var(--accent-light);
   background: var(--accent-glow);
-  border: 1px solid rgba(0, 9, 220, 0.25);
+  border: 1px solid var(--accent-border);
   padding: 5px 12px;
   border-radius: 20px;
   margin-bottom: 20px;
@@ -412,7 +422,7 @@ li::marker {
   height: 26px;
   border-radius: 50%;
   background: var(--accent-glow);
-  border: 1px solid rgba(0, 9, 220, 0.3);
+  border: 1px solid var(--accent-glow-strong);
   color: var(--accent-light);
   font-size: 12px;
   font-weight: 600;
@@ -574,8 +584,8 @@ td code {
 }
 
 .callout-info {
-  background: rgba(0, 9, 220, 0.06);
-  border-color: rgba(0, 9, 220, 0.2);
+  background: var(--accent-glow);
+  border-color: var(--accent-border);
   color: #a0b0ff;
 }
 
@@ -649,7 +659,7 @@ td code {
   height: 36px;
   border-radius: 8px;
   background: var(--accent-glow);
-  border: 1px solid rgba(0, 9, 220, 0.2);
+  border: 1px solid var(--accent-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -979,7 +989,7 @@ td code {
   gap: 6px;
   padding: 8px 16px;
   background: var(--accent-glow);
-  border: 1px solid rgba(0, 9, 220, 0.25);
+  border: 1px solid var(--accent-border);
   color: var(--accent-light);
   border-radius: 6px;
   font-size: 13px;
@@ -1246,7 +1256,7 @@ td code {
   border-radius: 12px;
   background: var(--accent-glow);
   color: var(--accent-light);
-  border: 1px solid rgba(0, 9, 220, 0.25);
+  border: 1px solid var(--accent-border);
 }
 
 .export-type {
@@ -1447,7 +1457,7 @@ td code {
 .filter-btn.active {
   color: var(--accent-light);
   background: var(--accent-glow);
-  border-color: rgba(0, 9, 220, 0.3);
+  border-color: var(--accent-glow-strong);
 }
 
 .no-results {
@@ -2095,7 +2105,7 @@ td code {
   line-height: 1.5;
 }
 .msg.user .msg-bubble {
-  background: rgba(0, 9, 220, 0.13);
+  background: var(--accent-glow);
   color: #c0c8ff;
   border-bottom-right-radius: 4px;
 }
@@ -2247,7 +2257,7 @@ td code {
 .wizard-step-indicator.active {
   color: var(--accent-light);
   background: var(--accent-glow);
-  border-color: rgba(0, 9, 220, 0.3);
+  border-color: var(--accent-glow-strong);
 }
 
 .wizard-step-indicator.completed {
