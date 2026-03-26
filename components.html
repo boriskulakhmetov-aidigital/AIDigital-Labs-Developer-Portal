@@ -408,12 +408,11 @@
         <div class="controls-bar">
           <input type="text" class="catalog-search" id="catalog-search" placeholder="Search components, hooks..." oninput="applyFilters()">
           <div class="filter-bar" style="margin-bottom:0">
-            <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
-            <button class="filter-btn" onclick="setFilter('component', this)">Components</button>
-            <button class="filter-btn" onclick="setFilter('hook', this)">Hooks</button>
-            <button class="filter-btn" onclick="setFilter('visual', this)" style="border-color:rgba(99,102,241,0.3);color:#818cf8">Visual UI</button>
-            <button class="filter-btn" onclick="setFilter('active', this)" style="border-color:rgba(34,197,94,0.3);color:var(--green)">Active</button>
-            <button class="filter-btn" onclick="setFilter('orphaned', this)" style="border-color:rgba(234,179,8,0.3);color:var(--yellow)">Orphaned</button>
+            <button class="filter-btn" onclick="toggleFilter('component', this)">Components</button>
+            <button class="filter-btn" onclick="toggleFilter('hook', this)">Hooks</button>
+            <button class="filter-btn" onclick="toggleFilter('visual', this)" style="border-color:rgba(99,102,241,0.3);color:#818cf8">Visual UI</button>
+            <button class="filter-btn" onclick="toggleFilter('active', this)" style="border-color:rgba(34,197,94,0.3);color:var(--green)">Active</button>
+            <button class="filter-btn" onclick="toggleFilter('orphaned', this)" style="border-color:rgba(234,179,8,0.3);color:var(--yellow)">Orphaned</button>
           </div>
           <select class="sort-select" id="sort-select" onchange="applyFilters()">
             <option value="consumers-desc">Most consumers</option>
@@ -450,7 +449,8 @@ window.addEventListener('message', (e) => {
 // ===== State =====
 let manifest = null;
 let allComponents = [];
-let activeFilter = 'all';
+// Filter toggles — each can be on/off independently
+const activeToggles = new Set(); // empty = show all
 
 const MANIFEST_URL = 'https://njwzbptrhgznozpndcxf.supabase.co/storage/v1/object/public/audit-assets/docs/component-manifest.json';
 
@@ -606,51 +606,30 @@ function toggleExpand(card) {
 }
 
 // ===== Filtering & Sorting =====
-function setFilter(type, btn) {
-  activeFilter = type;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+function toggleFilter(type, btn) {
+  if (activeToggles.has(type)) {
+    activeToggles.delete(type);
+    btn.classList.remove('active');
+  } else {
+    activeToggles.add(type);
+    btn.classList.add('active');
+  }
   applyFilters();
 }
 
 function setStatusFilter(status, event) {
   event.preventDefault();
-  if (status === 'active') {
-    activeFilter = 'active';
-  } else if (status === 'orphaned') {
-    activeFilter = 'orphaned';
-  } else {
-    activeFilter = 'all';
-  }
-  // Update filter buttons to reflect
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    const text = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active',
-      (activeFilter === 'all' && text === 'all') ||
-      (activeFilter === 'active' && text === 'active') ||
-      (activeFilter === 'orphaned' && text === 'orphaned')
-    );
-  });
+  activeToggles.clear();
+  if (status !== 'all') activeToggles.add(status);
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   applyFilters();
 }
 
 function setTypeFilter(type, event) {
   event.preventDefault();
-  if (type === 'component') {
-    activeFilter = 'component';
-  } else if (type === 'hook') {
-    activeFilter = 'hook';
-  } else {
-    activeFilter = 'all';
-  }
-  document.querySelectorAll('.filter-btn').forEach(b => {
-    const text = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active',
-      (activeFilter === 'all' && text === 'all') ||
-      (activeFilter === 'component' && text === 'components') ||
-      (activeFilter === 'hook' && text === 'hooks')
-    );
-  });
+  activeToggles.clear();
+  if (type !== 'all') activeToggles.add(type);
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   applyFilters();
 }
 
@@ -689,11 +668,17 @@ function applyFilters() {
     const searchText = card.getAttribute('data-search') || '';
 
     let matchesFilter = true;
-    if (activeFilter === 'component') matchesFilter = type === 'component';
-    else if (activeFilter === 'hook') matchesFilter = type === 'hook';
-    else if (activeFilter === 'visual') matchesFilter = comp.visual === true;
-    else if (activeFilter === 'active') matchesFilter = status === 'active';
-    else if (activeFilter === 'orphaned') matchesFilter = status === 'orphaned';
+    const comp = allComponents[parseInt(card.getAttribute('data-index'))];
+    if (activeToggles.size > 0) {
+      // Card must match ALL active toggles
+      for (const toggle of activeToggles) {
+        if (toggle === 'component' && type !== 'component') matchesFilter = false;
+        if (toggle === 'hook' && type !== 'hook') matchesFilter = false;
+        if (toggle === 'visual' && !comp?.visual) matchesFilter = false;
+        if (toggle === 'active' && status !== 'active') matchesFilter = false;
+        if (toggle === 'orphaned' && status !== 'orphaned') matchesFilter = false;
+      }
+    }
 
     const matchesSearch = !query || searchText.includes(query);
     const visible = matchesFilter && matchesSearch;
