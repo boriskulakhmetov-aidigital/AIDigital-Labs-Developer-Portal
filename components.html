@@ -439,6 +439,9 @@
   </main>
 
 <script>
+// Force scroll to top on load (iframes with hash anchors cause scroll-down)
+window.addEventListener('load', () => { setTimeout(() => window.scrollTo(0, 0), 100); });
+
 // ===== State =====
 let manifest = null;
 let allComponents = [];
