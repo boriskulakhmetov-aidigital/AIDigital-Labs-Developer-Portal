@@ -570,7 +570,7 @@ function renderGrid() {
           <span class="catalog-consumers">${consumers}</span>
         </div>
         ${c.description ? `<div class="catalog-detail" style="padding:4px 16px 8px;color:#888;font-size:13px;line-height:1.4">${escapeHtml(c.description)}</div>` : ''}
-        ${c.visual ? `<div class="catalog-detail" style="margin:4px 16px 8px;border-radius:8px;overflow:hidden;border:1px solid #1e1e1e"><iframe src="/preview/#preview-${c.name}" data-preview="preview-${c.name}" style="width:100%;height:60px;border:none;background:#0a0a0f" loading="lazy" scrolling="no"></iframe></div>` : ''}
+        ${c.visual ? `<div class="catalog-detail" style="margin:4px 16px 8px;border-radius:8px;overflow:hidden;border:1px solid #1e1e1e"><iframe src="/preview/#preview-${c.name}" data-preview="preview-${c.name}" style="width:100%;height:${c.previewHeight || 150}px;border:none;background:#0a0a0f" loading="lazy"></iframe></div>` : ''}
         <div class="catalog-detail">
           <div class="catalog-detail-row">
             <span class="catalog-detail-label">Exports</span>
