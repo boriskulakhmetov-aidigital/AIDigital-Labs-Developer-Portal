@@ -1,6 +1,6 @@
 # Developer Portal
 
-> **Repo:** `boriskulakhmetov-aidigital/AIDigital-Labs-Developer-Portal`
+> **Repo:** `AiDigital-com/AIDigital-Labs-Developer-Portal`
 
 Part of the AI Digital Labs portfolio. See the Design System repo CLAUDE.md for full architecture reference.
 
@@ -46,4 +46,4 @@ For critical production issues: push directly to `main`, then backmerge to `deve
 - Use `Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>` in commits
 - Work on `develop` branch by default unless told otherwise
 - PATH: `export PATH="/c/Program Files/nodejs:$PATH"` before npm commands
-- Git push: use credential-embedded URL `https://boriskulakhmetov-aidigital:{GITHUB_TOKEN}@github.com/boriskulakhmetov-aidigital/{repo}.git`
+- Git push: use credential-embedded URL `https://AiDigital-com:{GITHUB_TOKEN}@github.com/AiDigital-com/{repo}.git`
