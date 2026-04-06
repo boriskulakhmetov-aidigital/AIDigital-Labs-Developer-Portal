@@ -570,7 +570,7 @@ function renderGrid() {
           <span class="catalog-consumers">${consumers}</span>
         </div>
         ${c.description ? `<div class="catalog-detail" style="padding:4px 16px 8px;color:#888;font-size:13px;line-height:1.4">${escapeHtml(c.description)}</div>` : ''}
-        ${c.visual ? `<div class="catalog-detail" style="margin:4px 16px 8px;border-radius:8px;overflow:hidden;border:1px solid #1e1e1e"><iframe src="/preview/#preview-${c.name}" data-preview="preview-${c.name}" style="width:100%;height:${c.previewHeight || 150}px;border:none;background:#0a0a0f" loading="lazy"></iframe></div>` : ''}
+        ${c.visual ? `<div class="catalog-detail" style="margin:4px 16px 8px;border-radius:8px;overflow:hidden;border:1px solid var(--border)"><iframe src="/preview/#preview-${c.name}" data-preview="preview-${c.name}" style="width:100%;height:${c.previewHeight || 150}px;border:none;background:var(--bg)" loading="lazy"></iframe></div>` : ''}
         <div class="catalog-detail">
           <div class="catalog-detail-row">
             <span class="catalog-detail-label">Exports</span>
@@ -738,6 +738,10 @@ function toggleTheme() {
     (window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light'));
   html.setAttribute('data-theme', next);
   localStorage.setItem('dev-portal-theme', next);
+  // Sync theme to preview iframes
+  document.querySelectorAll('iframe[data-preview]').forEach(iframe => {
+    try { iframe.contentDocument?.documentElement.setAttribute('data-theme', next); } catch(e) {}
+  });
 }
 // Apply saved theme on load
 (function() {
