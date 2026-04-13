@@ -60,6 +60,7 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Reference</div>
         <a href="#rate-limits" class="sidebar-link">Rate Limits &amp; Errors</a>
+        <a href="#pipeline" class="sidebar-link">Pipeline Architecture</a>
       </div>
 
       <div class="sidebar-section">
@@ -996,6 +997,146 @@ curl -s "https://website-audit.apps.aidigitallabs.com/.netlify/functions/api-res
         <div class="callout callout-info">
           <div class="callout-title">Rate limit headers</div>
           Every response includes <code>X-RateLimit-Remaining</code> and <code>X-RateLimit-Reset</code> headers so you can implement proactive throttling.
+        </div>
+      </section>
+
+      <!-- Pipeline Architecture -->
+      <section id="pipeline">
+        <h2>Pipeline Architecture</h2>
+
+        <p>Every AI report pipeline follows the <strong>N-Lambda pattern</strong>: a single anchor task fans out into N parallel evaluators, merges in a synthesis phase, then optionally runs a visualizer to produce structured JSON for micro-reports. All phases execute via the Supabase <code>pipeline_tasks</code> task queue — no polling, no function-to-function HTTP calls.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-title">Frontend integration</div>
+          Clients subscribe to job completion via <a href="#response-format">the standard polling pattern</a>. The frontend uses Supabase Realtime on <code>job_status</code> — zero polling needed once subscribed.
+        </div>
+
+        <h3>The N-Lambda Pattern</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">text</span>
+          </div>
+          <pre><code>                   ┌──────────────┐
+                   │   DISPATCH   │  POST /api → inserts anchor task
+                   └──────┬───────┘
+                          │
+                   ┌──────▼───────┐
+                   │    ANCHOR    │  Phase 1 — reads intake, fans out
+                   └──────┬───────┘
+                          │  inserts N pipeline_tasks concurrently
+          ┌───────────────┼───────────────┐
+          │               │               │
+   ┌──────▼──────┐ ┌──────▼──────┐ ┌──────▼──────┐
+   │  Lambda 1   │ │  Lambda 2   │ │  Lambda N   │  Phase 2 — parallel
+   │  evaluator  │ │  evaluator  │ │  evaluator  │
+   └──────┬──────┘ └──────┬──────┘ └──────┬──────┘
+          └───────────────┼───────────────┘
+                          │  last Lambda inserts synthesis task
+                   ┌──────▼───────┐
+                   │  SYNTHESIS   │  Phase 3 — cross-dimension review
+                   └──────┬───────┘
+                          │  inserts visualizer task (if applicable)
+                   ┌──────▼───────┐
+                   │  VISUALIZER  │  Phase 4 — parallel JSON extraction
+                   └──────┬───────┘
+                          │  writes report_data, sets job_status = complete
+                   ┌──────▼───────┐
+                   │   CLIENT     │  Realtime subscription fires
+                   └──────────────┘</code></pre>
+        </div>
+
+        <h3>App Pipelines</h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>App</th>
+                <th>Anchor</th>
+                <th>Phase 2 — N Lambdas</th>
+                <th>Synthesis</th>
+                <th>Visualizer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Neuromarketing Audit</strong></td>
+                <td>URL + brand brief</td>
+                <td>6 dimensions: color psychology, typography, visual hierarchy, emotional triggers, attention flow, brand consistency</td>
+                <td>Cross-dimension scoring, recommendations</td>
+                <td>Yes — 3-level cascade</td>
+              </tr>
+              <tr>
+                <td><strong>Website Audit</strong></td>
+                <td>URL crawl + scope</td>
+                <td>5 dimensions: SEO, conversion, accessibility, performance, UX</td>
+                <td>Severity ratings, site health score</td>
+                <td>Yes — 3-level cascade</td>
+              </tr>
+              <tr>
+                <td><strong>Prompt Engineering</strong></td>
+                <td>Prompt + goal + context</td>
+                <td>5 dimensions: clarity, specificity, context, constraints, format</td>
+                <td>3 improved prompt variants with explanations</td>
+                <td>No (markdown only)</td>
+              </tr>
+              <tr>
+                <td><strong>Synthetic Focus Group</strong></td>
+                <td>Concept brief + demographics</td>
+                <td>5–8 synthetic personas, each responding independently</td>
+                <td>Thematic analysis, segment scoring, favorability</td>
+                <td>Yes — 3-level cascade</td>
+              </tr>
+              <tr>
+                <td><strong>Logic &amp; Reasoning Review</strong></td>
+                <td>Document (text or PDF)</td>
+                <td>6 rubric layers: logical consistency, evidence quality, narrative structure, reasoning gaps, factual claims, argument strength</td>
+                <td>Rubric scorecard, improvement suggestions</td>
+                <td>Yes — 3-level cascade</td>
+              </tr>
+              <tr>
+                <td><strong>AIO Optimization</strong></td>
+                <td>Brand + engines list</td>
+                <td>1 Lambda per AI engine: Google SGE, Gemini, Gemini Pro, ChatGPT, ChatGPT Pro (and others)</td>
+                <td>Per-engine synthesis (SoV, sentiment, quotes) → cross-engine KPIs</td>
+                <td>Written to <code>scans.report_data</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Visualizer — 3-Level Cascade</h3>
+        <p>Used by NM, WA, SFG, and LRR to convert markdown synthesis into structured JSON for micro-report rendering.</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">text</span>
+          </div>
+          <pre><code>Level 1 — Parallel extraction (~30s)
+  One Gemini call per report section, all concurrent
+  Partial results stream to client via PartialPreview
+  Fails if: any section missing or parse error
+
+Level 2 — Monolithic fallback (~60s)
+  Single call extracts entire report at once
+  Only runs if Level 1 failed — never concurrent with Level 1
+
+Level 3 — Retry with repair (~90s)
+  Re-runs monolithic with repairJson() post-processing
+  Fixes truncation, trailing commas, unescaped strings
+  Only runs if Level 2 failed</code></pre>
+        </div>
+
+        <h3>AIO — Per-Engine Progressive Data</h3>
+        <p>AIO is the only pipeline where Phase 2 results are surfaced incrementally to the client. Each Lambda writes to <code>scan_engines.synthesis_data</code> as it completes, enabling progressive reveal in the UI before Phase 3 cross-engine review finishes.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>After Phase</th><th>Data Available</th><th>Table / Column</th></tr></thead>
+            <tbody>
+              <tr><td>Phase 2 (per engine)</td><td><code>queries_done</code>, <code>queries_total</code> for progress bars</td><td><code>scan_engines</code></td></tr>
+              <tr><td>Phase 3 (per engine)</td><td><code>ai_sov</code>, <code>net_sentiment_score</code>, <code>top_positive_responses[]</code></td><td><code>scan_engines.synthesis_data</code></td></tr>
+              <tr><td>Phase 4 (complete)</td><td><code>overall_kpis</code>, full cross-engine report</td><td><code>scans.report_data</code></td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
